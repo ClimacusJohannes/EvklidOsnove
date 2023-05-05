@@ -3,7 +3,9 @@ from numpy import matmul, ndarray, array, sqrt
 import numpy as np
 from modules import Proposition as p
 from Proposition_1 import *
+from manim.utils.color import Colors
 
+# config.background_color = '#fcf3d9'
 class Proposition_II(Scene):
     def construct(self):
 
@@ -12,7 +14,7 @@ class Proposition_II(Scene):
 
         p.display_text(self, title, prop)
 
-        dana_daljica = Line(start= DOWN + (5 * LEFT), end = 3 * LEFT)
+        dana_daljica = Line(start=  5 * LEFT, end = 3 * LEFT + UP)
         dana_tocka = Dot(2 * LEFT)
 
         self.add(dana_daljica)
@@ -33,7 +35,7 @@ class Proposition_II(Scene):
         self.play(Rotate(koncna_daljica, - (koncna_daljica.get_angle() - dana_daljica.get_angle()), about_point=dana_daljica.end))
 
     def construction(scene : Scene, dana_daljica : Line, dana_tocka : Dot, initial_construction : bool = False):
-        initial_index = len(scene.mobjects) - 1
+        initial_index = len(scene.mobjects)
         
         run_time=1.0
         lag_ratio=0.0
@@ -52,16 +54,17 @@ class Proposition_II(Scene):
         circle_s = Circle(radius=p.get_line_length(dana_daljica)).shift(dana_daljica.end).set_color(GREEN)
         p.rotate(circle_s)
         sredisce_s = Dot(circle_s.get_arc_center()).set_color(GREEN)
-        polmer_s = Line(start=sredisce_s.get_arc_center(), end=(dana_daljica.end - (p.get_line_length(dana_daljica) * p.get_line_slope(scene.mobjects[initial_index + 3])))).set_color(GREEN)
+        polmer_s = Line(start=sredisce_s.get_arc_center(), end=(dana_daljica.end - (p.get_line_length(dana_daljica) * p.get_line_slope(scene.mobjects[initial_index + 2])))).set_color(GREEN)
         scene.play(Create(sredisce_s, run_time=run_time))
         scene.play(Create(circle_s, run_time=run_time))
 
-        podaljsana_daljica = p.create_extended_line(scene.mobjects[initial_index + 3], for_len=p.get_line_length(dana_daljica), from_end=False).set_color(ORANGE)
+        podaljsana_daljica = p.create_extended_line(scene.mobjects[initial_index + 2], for_len=p.get_line_length(dana_daljica), from_end=False).set_color(ORANGE)
 
         # podaljsaj enega izmed krakov
-        scene.play(Transform(scene.mobjects[initial_index + 3], podaljsana_daljica, run_time=run_time))
+        scene.play(Transform(scene.mobjects[initial_index + 2], podaljsana_daljica, run_time=run_time))
         scene.play(Create(polmer_s, run_time=run_time))
-        scene.wait()
+        if initial_construction:
+            scene.wait()
 
 
         circle_l = Circle(radius=p.get_line_length(podaljsana_daljica)).shift(podaljsana_daljica.end).set_color(ORANGE)
@@ -69,8 +72,8 @@ class Proposition_II(Scene):
         scene.play(Create(sredisce_l, run_time=run_time))
         scene.play(Create(circle_l, run_time=run_time))
 
-        polmer_l = p.create_extended_line(scene.mobjects[initial_index + 4], for_len=p.get_line_length(dana_daljica), from_end=False).set_color(ORANGE)
-        scene.play(Transform(scene.mobjects[initial_index + 4], polmer_l, run_time=run_time))
+        polmer_l = p.create_extended_line(scene.mobjects[initial_index + 3], for_len=p.get_line_length(dana_daljica), from_end=False).set_color(ORANGE)
+        scene.play(Transform(scene.mobjects[initial_index + 3], polmer_l, run_time=run_time))
         
         koncna_daljica = Line(start=polmer_l.start, end=dana_tocka.get_arc_center()).set_color(BLUE)
         

@@ -8,6 +8,8 @@ class Proposition():
         scene.remove(title)
         scene.play(Create(prop))
         scene.wait()
+        scene.wait()
+        scene.wait()
         scene.remove(prop)
         scene.wait()
 

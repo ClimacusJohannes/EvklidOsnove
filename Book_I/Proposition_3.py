@@ -4,14 +4,15 @@ import numpy as np
 from modules import Proposition as p
 from Proposition_2 import *
 
+# config.background_color = '#fcf3d9'
 class Proposition_III(Scene):
     def construct(self):
         title=Text('Knjiga I, izjava III\n Problem.').scale(2)
-        prop=Text('Od večje od dveh danih črt odreži del enak manjši.')
+        prop=Text('Od večje od dveh danih črt izriši del enak manjši.')
         p.display_text(self, title, prop)
 
-        line1 = Line(start=(DOWN), end=(RIGHT)) # krajsa daljica
-        line2 = Line(start=(LEFT + 2 * UP), end= 1 * RIGHT + UP) # daljsa daljiva
+        line1 = Line(start=(DOWN + RIGHT), end=(RIGHT)) # krajsa daljica
+        line2 = Line(start=(LEFT + UP), end= 1 * RIGHT + UP) # daljsa daljiva
         dot = Dot(line2.start)
 
         self.add(line1)
