@@ -65,21 +65,3 @@ class Proposition_I(Scene):
             scene.play(Uncreate(krog1, run_time=run_time, lag_ratio=lag_ratio))
             scene.play(Uncreate(krog2, run_time=run_time, lag_ratio=lag_ratio))
             scene.wait()
-
-# class Proposition_II(Scene):
-#     def construct(self):
-        
-#         title = Text('Knjiga I, Izrek II').scale(2)
-#         prop = Text('Iz dane točke \nizriši daljico enako dani daljici.')
-
-#         Proposition.display_text(self, title, prop)
-
-#         dana_daljica = Line(start=DOWN + (5 * LEFT), end = (DOWN + LEFT))
-#         dana_tocka = Dot(RIGHT+UP)
-#         pomozna_daljica = DashedLine(start=dana_daljica.end, end=dana_tocka.get_arc_center())
-
-#         self.play(Create(dana_daljica))
-#         self.play(Create(dana_tocka))
-#         self.play(Create(pomozna_daljica))
-
-#         Proposition_I.construction(self, pomozna_daljica, color=ORANGE, oposite_orientation=True)
