@@ -13,7 +13,7 @@ class Proposition_V(Scene):
     def construct(self):
 
         title = "Knjiga I, Izrek V."
-        prop = "Za vsak enakokraki trikotnik, "
+        prop = "Za vsak enakokraki trikotnik velja, da ima dva enaka kota.\nČe stranici podaljšamo za isto dolžino bosta ta dva kota prav tako enaka."
         
         p.display_text(self, title, prop)
 
