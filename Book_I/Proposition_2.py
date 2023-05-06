@@ -24,8 +24,8 @@ class Proposition_II(Scene):
 
         
         # Dokaz
-        podaljsana_daljica = self.mobjects[7]
-        polmer_l = self.mobjects[8]
+        podaljsana_daljica = self.mobjects[9]
+        polmer_l = self.mobjects[10]
         koncna_daljica = self.mobjects[-1]
         koncna_daljica_copy=koncna_daljica.copy()
         self.add(koncna_daljica_copy)
@@ -62,6 +62,8 @@ class Proposition_II(Scene):
 
         # podaljsaj enega izmed krakov
         scene.play(Transform(scene.mobjects[initial_index + 2], podaljsana_daljica, run_time=run_time))
+        print("length of mobjects list after podaljsana daljica is added: ", len(scene.mobjects))
+        print(scene.mobjects)
         scene.play(Create(polmer_s, run_time=run_time))
         if initial_construction:
             scene.wait()
