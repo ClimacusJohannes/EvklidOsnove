@@ -67,8 +67,8 @@ class Proposition():
         line1_len = Proposition.get_line_length(line1)
         line2_len = Proposition.get_line_length(line2)
         
-        angle = Angle(line1=line1, line2=line2, radius=min(line1_len, line2_len)/5).set_color(color)
-        angle_helper = Angle(line1=line1, line2=line2, radius=0).set_color(color)
+        angle = Angle(line1=line1, line2=line2, radius=min(line1_len, line2_len)/5, other_angle=True).set_color(color)
+        angle_helper = Angle(line1=line1, line2=line2, radius=0, other_angle=True).set_color(color)
         q1 = angle.points #  save all coordinates of points of angle a1
         q2 = angle_helper.reverse_direction().points  #  save all coordinates of points of angle a1 (in reversed direction)
         pnts = np.concatenate([q1, q2, q1[0].reshape(1, 3)]) 
@@ -90,3 +90,4 @@ class Proposition():
             
 
         return mfill
+    

@@ -2,7 +2,7 @@ from manim import *
 from numpy import matmul, ndarray, array, sqrt
 import numpy as np
 from modules import Proposition as p
-from Proposition_1 import *
+from Proposition_01 import *
 from manim.utils.color import Colors
 
 # config.background_color = '#fcf3d9'
@@ -81,9 +81,9 @@ class Proposition_II(Scene):
         
         scene.play(Create(koncna_daljica), run_time=run_time)
         
-        print("Objects to leave: %d" % initial_index)
-        print("Scene: ")
-        print(scene.mobjects)
+        # print("Objects to leave: %d" % initial_index)
+        # print("Scene: ")
+        # print(scene.mobjects)
 
 
         if initial_construction == False :
