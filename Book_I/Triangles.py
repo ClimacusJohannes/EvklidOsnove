@@ -1,29 +1,9 @@
 from manim import *
-from modules import Proposition as p
-
-# triangle1 = Polygram(points).set_color(WHITE).round_corners()
-
-# class ColoredAngle(Mobject):
-    
-#     def __init__(self, line1, line2):
-#         line1_len = p.get_line_length(line1)
-#         line2_len = p.get_line_length(line2)
-        
-#         angle = Angle(line1=line1, line2=line2, radius=min(line1_len, line2_len)/5).set_color(color)
-#         angle_helper = Angle(line1=line1, line2=line2, radius=0).set_color(color)
-#         q1 = angle.points #  save all coordinates of points of angle a1
-#         q2 = angle_helper.reverse_direction().points  #  save all coordinates of points of angle a1 (in reversed direction)
-#         pnts = np.concatenate([q1, q2, q1[0].reshape(1, 3)]) 
-#         super().set_points_as_corners(pnts).set_fill(color, opacity=1)
-
-
-    
+from modules import Proposition as p 
 
 class ScaleneTriangle(Polygram):
     def __init__(self, point_a, point_b, point_c, color=WHITE, **kwargs):
         super().__init__([point_a, point_b, point_c, point_a], color=color, **kwargs)
-
-        # self.points = self.get_vertices()
 
         self.a = Line(start=point_b, end=point_c)
         self.add(self.a)
@@ -56,29 +36,9 @@ class ScaleneTriangle(Polygram):
 
         if rotate:
             mfill.rotate(angle=rotate_for, about_point=about_point)
-            
-        if adjacent_angle:
-            # final = self.get_adjacent_angle(mfill, line1)
-            pass
-        # else:
         final = mfill
 
-        print("Returning:")
-        print(final)
-        print("Instead of")
-        print(mfill)
-
         return final.set_color(color)
-    
-    def get_adjacent_angle(self, mfill : VMobject, line1 : Line):
-        
-        line2 = Line(start=line1.start, end=line1.end)
-
-        full_angle_figure = self.create_angle_between_lines(line1, line2)
-        print("I got to here!")
-
-        return Difference(mfill, full_angle_figure, color=GREEN, fill_opacity=1)
-        
 
     def get_angle_figures(self, colors = [WHITE, WHITE, WHITE], rotate=(0, 0, 0), quadrant=((1,1), (1,1), (1,1)), other_angle=(False, False, False)) -> VGroup:
 
