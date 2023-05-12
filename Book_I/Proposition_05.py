@@ -10,6 +10,7 @@ from Proposition_03 import Proposition_III
 from Proposition_04 import Proposition_IV
 
 class Proposition_V(Scene):
+    
     def construct(self):
 
         title = "Knjiga I, Izrek V."
@@ -73,6 +74,7 @@ class Proposition_V(Scene):
         new_triangle = ScaleneTriangle(point_a=[points[0][0], points[0][1], 0], point_b=[points[1][0], points[1][1], 0], point_c=[points[2][0], points[2][1], 0])
         self.add(new_triangle)
         self.remove(new_triangle2)
+        
         Proposition_IV.construction(self, new_triangle1, new_triangle)
 
         self.wait()
