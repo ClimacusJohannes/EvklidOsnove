@@ -31,6 +31,24 @@ class Proposition():
         circle.set_anchors_and_handles(new[0], new[1], new[2], new[3])
         circle.shift(2 * center * RIGHT)
 
+    def do_lines_have_common_points(line_1, line_2):
+        point_in_common = 0
+        which_point = ""
+        if (all(line_1.start) == all(line_2.start)):
+            point_in_common = line_1.start
+            which_point = "start-start"
+        elif (all(line_1.start) == all(line_2.end)):
+            point_in_common = line_1.start
+            which_point = "start-end"
+        elif (all(line_1.end) == all(line_2.start)):
+            point_in_common = line_1.end 
+            which_point = "end-start"
+        elif (all(line_1.end) == all(line_2.end)):
+            point_in_common = line_1.end
+            which_point = "end-end"
+
+        return (point_in_common, which_point)
+
     def get_line_length(line : Line):
         return np.linalg.norm(line.end - line.start)
     

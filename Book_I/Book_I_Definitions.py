@@ -59,6 +59,11 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        Book_I_Definitions.Definition_V(self, [line, Line(line.start, 3*UP)])
+        self.wait()
+
+        self.clear()
+
 
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
         """
@@ -105,6 +110,7 @@ class Book_I_Definitions(Scene):
         """
         "Fourth Definition: A straight line is that which lies evenly between its extremities."
         Takes in (a) scene : Scene, (b) point1 and (c) point2 : Point, color : Color 
+        Plays the creation of two point at the extremities of the line.
         """
         dot1 = Dot(point1, color=color)
         dot2 = Dot(point2, color=color)
@@ -119,7 +125,36 @@ class Book_I_Definitions(Scene):
 
         return line
     
-    def Definition_V():
+    def Definition_V(scene : Scene, lines : list[Line]):
         """
         Fifth definition: A surface is that which has length and breadth only.
+        Takes in (1) scene : Scene, (2) line_1 : Line, (3) line_2 : Line
+        Plays the creation of a plane surface - a polygon from two lines
         """
+        for line in lines:
+            line_1 = lines[lines.index(line)]
+            try:
+                line_2 = lines[lines.index(line)+1]
+            except:
+                line_2 = lines[0]
+            points_in_common = p.do_lines_have_common_points(line_1, line_2)
+            if len(points_in_common) == 0:
+                ValueError("the lines have to have one extremity in common!")
+            if (line_1.get_angle() == line_2.get_angle()):
+                ValueError("the lines should not be parallel!")
+            
+        corners = []
+        corners.append(points_in_common[0])
+        corners.append(line_1.start)
+        corners.append(line_1.end)
+        corners.append(line_2.start)
+        corners.append(line_2.end)
+
+
+        corners = set(corners)
+
+    
+        print(corners)
+
+        
+

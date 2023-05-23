@@ -74,11 +74,12 @@ class Proposition_IV(Scene):
 
         # dokaz
 
-        angleB1 = triangle1.create_angle_between_lines(line1=triangle1.c, line2=triangle1.a, color=BLUE, quadrant=(1,-1), rotate=True, about_point=triangle1.point_b.location, rotate_for=PI)
+        # angleB1 = triangle1.create_angle_between_lines(line1=triangle1.c, line2=triangle1.a, color=BLUE, quadrant=(1,-1), rotate=True, about_point=triangle1.point_b.location, rotate_for=PI)
+        angleB1 = triangle1.create_angle_between_lines(line1=triangle1.c, line2=triangle1.a, color=BLUE, quadrant=(-1,1))
         # angleB1.shift(RIGHT)
         scene.play(FadeIn(angleB1))
 
-        angleC1 = triangle1.create_angle_between_lines(line1=a1, line2=b1, color=RED, rotate=True, rotate_for=PI, about_point=triangle2.get_vertices()[0], other_angle=True)
+        angleC1 = triangle1.create_angle_between_lines(line1=triangle1.c, line2=triangle1.b, color=RED, other_angle=True)
         scene.play(FadeIn(angleC1))
 
         a = Line(start=triangle2.get_vertices()[1], end=triangle2.get_vertices()[0]).set_color(YELLOW)
