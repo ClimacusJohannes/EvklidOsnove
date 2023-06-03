@@ -59,7 +59,32 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        # Display fifth definition
+
+        Definicija_V = "Knjiga I, Definicija V."
+        prop = "Ravna črta leži enakomerno\nmed svojima koncema."
+
+        
+        p.display_text(self, Definicija_V, prop)
+
         Book_I_Definitions.Definition_V(self, [line, Line(line.start, 3*UP)])
+        self.wait()
+
+        self.clear()
+
+        # Display the sixth definition
+
+        Definicija_VI = "Knjiga I, Definicija VI."
+        prop = "Konci ravnine so daljice."
+
+        p.display_text(self, Definicija_VI, prop)
+        self.wait()
+
+        self.clear()
+
+        
+
+        Book_I_Definitions.Definition_VI(self)
         self.wait()
 
         self.clear()
@@ -114,7 +139,7 @@ class Book_I_Definitions(Scene):
         """
         dot1 = Dot(point1, color=color)
         dot2 = Dot(point2, color=color)
-        line = Line(start=point1, end=point2)
+        line = Line(start=point1, end=point2, color=color)
 
         scene.add(dot1)
         scene.add(dot2)
@@ -151,10 +176,26 @@ class Book_I_Definitions(Scene):
         corners.append(line_2.end)
 
 
-        corners = set(corners)
-
     
         print(corners)
 
-        
+    def Definition_VI(scene : Scene, surface : Polygram = None):
+        if not surface:
+            surface = Rectangle(height=6, width=8, color=YELLOW, fill_opacity=0.5, stroke_opacity=0.5)
+            scene.add(surface)
+            scene.wait()
 
+        points = surface.get_vertices()
+        lines = VGroup()
+
+        i = 0
+        while i < len(points):
+            Book_I_Definitions.Definition_IV(scene, points[i-1], points[i], color=RED)
+            # line = Line(start=points[i-1], end=points[i], color=GREEN)
+            # lines.add(line)
+            scene.wait(0.5)
+            i += 1
+
+        scene.play(Create(lines))
+
+        
