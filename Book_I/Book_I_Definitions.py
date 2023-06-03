@@ -62,12 +62,15 @@ class Book_I_Definitions(Scene):
         # Display fifth definition
 
         Definicija_V = "Knjiga I, Definicija V."
-        prop = "Ravna črta leži enakomerno\nmed svojima koncema."
+        prop = "Ploskev ima samo dolžino in širino."
 
         
         p.display_text(self, Definicija_V, prop)
 
-        Book_I_Definitions.Definition_V(self, [line, Line(line.start, 3*UP)])
+        line1 = Book_I_Definitions.Definition_II(self)
+        line2 = Book_I_Definitions.Definition_II(self, start=line.start, end=3*UP)
+
+        Book_I_Definitions.Definition_V(self, [line1, line2])
         self.wait()
 
         self.clear()
@@ -162,22 +165,73 @@ class Book_I_Definitions(Scene):
                 line_2 = lines[lines.index(line)+1]
             except:
                 line_2 = lines[0]
-            points_in_common = p.do_lines_have_common_points(line_1, line_2)
+            (points_in_common, which) = p.do_lines_have_common_points(line_1, line_2)
             if len(points_in_common) == 0:
                 ValueError("the lines have to have one extremity in common!")
             if (line_1.get_angle() == line_2.get_angle()):
                 ValueError("the lines should not be parallel!")
             
         corners = []
-        corners.append(points_in_common[0])
-        corners.append(line_1.start)
-        corners.append(line_1.end)
-        corners.append(line_2.start)
-        corners.append(line_2.end)
 
 
-    
+        # add the fourth vertex
+
+        forth_corner = 0
+        end = 0
+        points_in_common = (p, which)
+        if which == "start-start":
+            corners.append(line_1.start)
+            corners.append(line_1.end)
+            corners.append(line_2.end + (line_1.end - line_1.start))
+            corners.append(line_2.end)
+            corners.append(line_1.start)
+        elif which == "start-end":
+            corners.append(line_1.start)
+            corners.append(line_1.end)
+            corners.append(line_2.start + (line_1.end - line_1.start))
+            corners.append(line_2.start)
+            corners.append(line_1.start)
+        elif which == "end-start":
+            corners.append(line_1.end)
+            corners.append(line_1.start)
+            corners.append(line_2.end + (line_1.start - line_1.end))
+            corners.append(line_2.end)
+            corners.append(line_2.start)
+        elif which == "end-end":
+            corners.append(line_1.end)
+            corners.append(line_1.start)
+            corners.append(line_2.start + (line_1.start - line_1.end))
+            corners.append(line_2.start)
+            corners.append(line_2.end)
+        # corners.append(forth_corner)
+        # corners.append(end)
+
+        # i = 0
+        # j = 0
+        # while i < len(corners):
+        #     j = i + 1
+        #     while j < len(corners):
+        #         count = 0
+        #         k = 0
+        #         while k < len(corners[i]):
+        #             if corners[i][count] == corners[j][count]:
+        #                 count += 1
+        #             k += 1
+        #         if count == 3:
+        #             corners.pop(j)
+        #         j += 1
+        #     i += 1
+                    
+
         print(corners)
+        surface = Polygram(corners, color=YELLOW, fill_color=YELLOW)
+        surface = Polygon(*corners, color=YELLOW, fill_color=YELLOW)
+
+        scene.add(line_1, line_2)
+        scene.wait()
+        scene.play(Create(surface))
+
+        return 
 
     def Definition_VI(scene : Scene, surface : Polygram = None):
         if not surface:
@@ -198,4 +252,5 @@ class Book_I_Definitions(Scene):
 
         scene.play(Create(lines))
 
-        
+
+    
