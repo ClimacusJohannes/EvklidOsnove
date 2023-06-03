@@ -4,21 +4,18 @@ import numpy as np
 class Proposition():
     def display_text(scene : Scene, title: str, prop: str): 
         if (type(title) != Text) and type(title) == str:
-            title = Text(title)
+            title = Text(title, font_size=DEFAULT_FONT_SIZE/1.2).to_edge(UL)
         else:
             TypeError('The title is supposed to be either a Text or a str.')
         if (type(prop) != Text) and type(prop) == str:
-            prop = Text(prop)
+            prop = MarkupText(prop, font_size=title.font_size/1.5).to_edge(UL).shift(DOWN)
         else:
             TypeError('The prop is supposed to be either a Text or a str.')
-        scene.play(Create(title))
+        scene.play(Write(title))
         scene.wait()
-        scene.remove(title)
-        scene.play(Create(prop))
-        scene.wait()
-        scene.wait()
-        scene.wait()
-        scene.remove(prop)
+        # scene.remove(title)
+        scene.play(Write(prop))
+        # scene.remove(prop)
         scene.wait()
 
     def rotate(circle : Circle):

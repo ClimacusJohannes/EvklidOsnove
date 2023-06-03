@@ -11,11 +11,11 @@ class Book_I_Definitions(Scene):
         # Display first definition
 
         Definicija_I = "Knjiga I, Definicija I."
-        prop = "Točka je tisto, kar nima delov/ni deljivo."
+        prop = f'<span fgcolor="{YELLOW}">Točka</span> je tisto, kar nima delov/ni deljivo.'
         
         p.display_text(self, Definicija_I, prop)
 
-        point = Book_I_Definitions.Definition_I(self)
+        point = Book_I_Definitions.Definition_I(self, color=YELLOW)
         self.wait()
 
         self.clear()
@@ -23,12 +23,12 @@ class Book_I_Definitions(Scene):
         # Display second definition
 
         Definicija_II = "Knjiga I, Definicija II."
-        prop = "Črta/Daljica je dolžina brez širine."
+        prop = f'<span fgcolor="{RED}">Črta/Daljica</span> je dolžina brez širine.'
 
         
         p.display_text(self, Definicija_II, prop)
 
-        line = Book_I_Definitions.Definition_II(self)
+        line = Book_I_Definitions.Definition_II(self, color=RED)
         self.wait()
 
         self.clear()
@@ -36,12 +36,12 @@ class Book_I_Definitions(Scene):
         # Display second definition
 
         Definicija_II = "Knjiga I, Definicija III."
-        prop = "Konca daljice sta točki."
+        prop = f'Konca daljice sta <span fgcolor="{YELLOW}">točki</span>.'
 
         
         p.display_text(self, Definicija_II, prop)
 
-        Book_I_Definitions.Definition_III(self, line)
+        Book_I_Definitions.Definition_III(self, line, dot_color=YELLOW)
         self.wait()
 
         self.clear()
@@ -49,12 +49,12 @@ class Book_I_Definitions(Scene):
         # Display fourth definition
 
         Definicija_II = "Knjiga I, Definicija IV."
-        prop = "Ravna črta leži enakomerno\nmed svojima koncema."
+        prop = f'<span fgcolor="{BLUE}">Ravna črta</span> je tisto, kar leži enakomerno\nmed svojima koncema - <span fgcolor="{YELLOW}">točkama</span>. \n (<span fgcolor="{BLUE}">Ravna črta</span> (premica, ali daljica) je tista, ki enako leži za točke na njej.)'
 
         
         p.display_text(self, Definicija_II, prop)
 
-        Book_I_Definitions.Definition_IV(self, point1=line.start, point2=line.end)
+        Book_I_Definitions.Definition_IV(self, point1=line.start, point2=line.end, color=BLUE, dot_color=YELLOW)
         self.wait()
 
         self.clear()
@@ -62,7 +62,7 @@ class Book_I_Definitions(Scene):
         # Display fifth definition
 
         Definicija_V = "Knjiga I, Definicija V."
-        prop = "Ploskev ima samo dolžino in širino."
+        prop = "Površina ima samo dolžino in širino."
 
         
         p.display_text(self, Definicija_V, prop)
@@ -78,13 +78,9 @@ class Book_I_Definitions(Scene):
         # Display the sixth definition
 
         Definicija_VI = "Knjiga I, Definicija VI."
-        prop = "Konci ravnine so daljice."
+        prop = f'Konci <span fgcolor="{YELLOW}">površine</span> so <span fgcolor="{RED}">daljice</span>.'
 
         p.display_text(self, Definicija_VI, prop)
-        self.wait()
-
-        self.clear()
-
         
 
         Book_I_Definitions.Definition_VI(self)
@@ -99,7 +95,7 @@ class Book_I_Definitions(Scene):
         Takes in a scene : Scene, a point : Point and color : Color
         Plays the creation of a dot at the coordinates of the point
         """
-        dot = Dot(point) 
+        dot = Dot(point, color=color) 
         scene.play(Create(dot))
 
         return dot
@@ -115,15 +111,17 @@ class Book_I_Definitions(Scene):
 
         return line
 
-    def Definition_III(scene : Scene, line : Line, first_dot_color = WHITE, second_dot_color = WHITE):
+    def Definition_III(scene : Scene, line : Line, first_dot_color = WHITE, second_dot_color = WHITE, dot_color = None):
         """
         Third Definition: The extremities of a line are points.
         Takes in scene : Scene, line : Line, and first_dot_color and second_dot_color : Color
         Plays the creation of a line from start to end
         """
+        if not dot_color:
+            dot_color = line.color
         # construct dots at the ends of the line
-        dot1 = Dot(line.start, color=line.color)
-        dot2 = Dot(line.end, color=line.color)
+        dot1 = Dot(line.start, color=dot_color)
+        dot2 = Dot(line.end, color=dot_color)
 
         scene.add(line)
         scene.play(Create(dot1))
@@ -134,14 +132,18 @@ class Book_I_Definitions(Scene):
 
         return line
     
-    def Definition_IV(scene : Scene, point1 : Point, point2 : Point, color : Color = WHITE):
+    def Definition_IV(scene : Scene, point1 : Point, point2 : Point, color : Color = WHITE, dot_color = None):
         """
         "Fourth Definition: A straight line is that which lies evenly between its extremities."
         Takes in (a) scene : Scene, (b) point1 and (c) point2 : Point, color : Color 
         Plays the creation of two point at the extremities of the line.
         """
-        dot1 = Dot(point1, color=color)
-        dot2 = Dot(point2, color=color)
+
+        if not dot_color:
+            dot_color = color
+
+        dot1 = Dot(point1, color=dot_color)
+        dot2 = Dot(point2, color=dot_color)
         line = Line(start=point1, end=point2, color=color)
 
         scene.add(dot1)
@@ -208,7 +210,7 @@ class Book_I_Definitions(Scene):
         scene.wait()
         scene.play(Create(surface))
 
-        return 
+        return surface
 
     def Definition_VI(scene : Scene, surface : Polygram = None):
         """
@@ -217,7 +219,7 @@ class Book_I_Definitions(Scene):
         Plays the creation of lines (Book I, Definition IV) at the extremities of the given surface.
         """
         if not surface:
-            surface = Rectangle(height=3, width=4, color=YELLOW, fill_opacity=0.5, stroke_opacity=0.5)
+            surface = Rectangle(height=3, width=4, color=YELLOW, fill_opacity=0.5, stroke_opacity=0.5).shift(RIGHT+DOWN)
             scene.add(surface)
             scene.wait()
 
@@ -233,6 +235,8 @@ class Book_I_Definitions(Scene):
             i += 1
 
         scene.play(Create(lines))
+
+        return lines
 
     
 
