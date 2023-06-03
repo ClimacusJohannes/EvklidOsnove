@@ -203,28 +203,8 @@ class Book_I_Definitions(Scene):
             corners.append(line_2.start + (line_1.start - line_1.end))
             corners.append(line_2.start)
             corners.append(line_2.end)
-        # corners.append(forth_corner)
-        # corners.append(end)
-
-        # i = 0
-        # j = 0
-        # while i < len(corners):
-        #     j = i + 1
-        #     while j < len(corners):
-        #         count = 0
-        #         k = 0
-        #         while k < len(corners[i]):
-        #             if corners[i][count] == corners[j][count]:
-        #                 count += 1
-        #             k += 1
-        #         if count == 3:
-        #             corners.pop(j)
-        #         j += 1
-        #     i += 1
-                    
-
+        
         print(corners)
-        # surface = Polygram(corners, color=YELLOW, fill_color=YELLOW)
         surface = Polygon(*corners, color=YELLOW, fill_color=YELLOW, fill_opacity=0.5)
 
         scene.add(line_1, line_2)
