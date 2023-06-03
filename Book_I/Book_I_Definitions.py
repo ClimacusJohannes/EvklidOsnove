@@ -11,7 +11,7 @@ class Book_I_Definitions(Scene):
         # Display first definition
 
         Definicija_I = "Knjiga I, Definicija I."
-        prop = "Točka je tisto, kar nima širine."
+        prop = "Točka je tisto, kar nima delov/ni deljivo."
         
         p.display_text(self, Definicija_I, prop)
 
@@ -174,11 +174,8 @@ class Book_I_Definitions(Scene):
         corners = []
 
 
-        # add the fourth vertex
+        # add the vertexes
 
-        forth_corner = 0
-        end = 0
-        points_in_common = (p, which)
         if which == "start-start":
             corners.append(line_1.start)
             corners.append(line_1.end)
@@ -214,8 +211,13 @@ class Book_I_Definitions(Scene):
         return 
 
     def Definition_VI(scene : Scene, surface : Polygram = None):
+        """
+        Sixth definition: The extremities of a surface are lines.
+        Takes in (a) Scene and (b) a surface : Polygon
+        Plays the creation of lines (Book I, Definition IV) at the extremities of the given surface.
+        """
         if not surface:
-            surface = Rectangle(height=6, width=8, color=YELLOW, fill_opacity=0.5, stroke_opacity=0.5)
+            surface = Rectangle(height=3, width=4, color=YELLOW, fill_opacity=0.5, stroke_opacity=0.5)
             scene.add(surface)
             scene.wait()
 
@@ -231,6 +233,8 @@ class Book_I_Definitions(Scene):
             i += 1
 
         scene.play(Create(lines))
+
+    
 
 
     
