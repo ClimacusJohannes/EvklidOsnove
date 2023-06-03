@@ -224,8 +224,8 @@ class Book_I_Definitions(Scene):
                     
 
         print(corners)
-        surface = Polygram(corners, color=YELLOW, fill_color=YELLOW)
-        surface = Polygon(*corners, color=YELLOW, fill_color=YELLOW)
+        # surface = Polygram(corners, color=YELLOW, fill_color=YELLOW)
+        surface = Polygon(*corners, color=YELLOW, fill_color=YELLOW, fill_opacity=0.5)
 
         scene.add(line_1, line_2)
         scene.wait()
