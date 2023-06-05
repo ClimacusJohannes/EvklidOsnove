@@ -268,15 +268,23 @@ class Book_I_Definitions(Scene):
         line_1_len = p.get_line_length(line_1)
         line_2_len = p.get_line_length(line_2)
         
+        # create an angle with radius
         angle = Angle(line1=line_1, line2=line_2, radius=min(line_1_len, line_2_len)/angle_radius, other_angle=other_angle).set_color(color)
+        # crate an angle without a radiua
         angle_helper = Angle(line1=line_1, line2=line_2, radius=0, other_angle=other_angle).set_color(color)
+        
         q1 = angle.points #  save all coordinates of points of angle a1
         q2 = angle_helper.reverse_direction().points  #  save all coordinates of points of angle a1 (in reversed direction)
+        
+        # concatenate both sets of points
         pnts = np.concatenate([q1, q2, q1[0].reshape(1, 3)]) 
+
+        # crate an VMobject using the concatenadet sets of points as corners
         mfill = VMobject().set_color(color)
         mfill.set_points_as_corners(pnts).set_fill(color, opacity=0.5)
 
 
+        # If the user wants to rotate, then rotate
         # if rotate:
         #     # get common point
         #     common_points = Intersection(line_1, line2)
@@ -293,3 +301,5 @@ class Book_I_Definitions(Scene):
         scene.play(Create(mfill))
             
         return mfill
+
+    def Definition_X():
