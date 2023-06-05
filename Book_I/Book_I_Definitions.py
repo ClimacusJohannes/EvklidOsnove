@@ -88,6 +88,23 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        # .....
+
+        # Display the ninth definition
+
+        Definicija_IX = "Knjiga I, Definicija IX."
+        prop = f'Če sta črti <span fgcolor="{RED}">|</span> <span fgcolor="{BLUE}">|</span>, ki tvorita kot, ravni, pravimo, da je kot ravnolinijski (premočrtni).'
+
+        p.display_text(self, Definicija_IX, prop)
+        
+        line_1 = Line(start=2*LEFT+DOWN, end=2*RIGHT+DOWN, color=RED, z_index = 1)
+        line_2 = Line(start=2*LEFT+DOWN, end=1.5*RIGHT + UP, color=BLUE, z_index = 1)
+
+        Book_I_Definitions.Definition_IX(self, line_1, line_2)
+        self.wait()
+
+        self.clear()
+
 
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
         """
@@ -237,8 +254,42 @@ class Book_I_Definitions(Scene):
         scene.play(Create(lines))
 
         return lines
+    
+    def Definition_IX(scene : Scene, line_1 : Line, line_2 : Line, color : Color = YELLOW, other_angle : bool = False, angle_radius : int | float = 4):
+        """
+        Ninth definition:
+        And when the lines containing the angle are straight then the angle is called rectilinear.
+        Takes in (a) scene : Scene and two lines: (b) line_1 : Line, (c) line_2 : Line, (d) other_angle : bool and (e) angle_radius : float.
+        Angle radius is calculated as radius=min(line_1_len, line_2_len)/angle_radius.
+        Plays the creation of an angle between two lines.
+        """
 
     
+        line_1_len = p.get_line_length(line_1)
+        line_2_len = p.get_line_length(line_2)
+        
+        angle = Angle(line1=line_1, line2=line_2, radius=min(line_1_len, line_2_len)/angle_radius, other_angle=other_angle).set_color(color)
+        angle_helper = Angle(line1=line_1, line2=line_2, radius=0, other_angle=other_angle).set_color(color)
+        q1 = angle.points #  save all coordinates of points of angle a1
+        q2 = angle_helper.reverse_direction().points  #  save all coordinates of points of angle a1 (in reversed direction)
+        pnts = np.concatenate([q1, q2, q1[0].reshape(1, 3)]) 
+        mfill = VMobject().set_color(color)
+        mfill.set_points_as_corners(pnts).set_fill(color, opacity=0.5)
 
 
-    
+        # if rotate:
+        #     # get common point
+        #     common_points = Intersection(line_1, line2)
+        #     # common_point = common_points[0]
+        #     # elif all(line1.start) == all(line2.end):
+        #     #     common_point = line1.start
+        #     # elif all(line1.end) == all(line2.start):
+        #     #     common_point = line1.end
+        #     # elif all(line1.end) == all(line2.end):
+        #     #     common_point = line1.end
+        #     mfill.rotate(angle=rotate_for, about_point=about_point)
+
+        scene.add(line_1, line_2)
+        scene.play(Create(mfill))
+            
+        return mfill
