@@ -105,6 +105,25 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        # Display the tenth definition
+
+        Definicija_X = "Knjiga I, Definicija X"
+        prop = f'Če daljica/premica, ki stoji na drugi,\ntvori z njo dva sosednja <span fgcolor="{BLUE}">enaka kota, vsaki izmed njiju je pravi</span>,\nin stoječa daljica/premica se imenuje spuščena (pravokotnica, normala) na tisto na kateri stoji.'
+
+        p.display_text(self, Definicija_X, prop)
+
+        line_1_a = Line(start=2*LEFT+2*DOWN, end=2*DOWN)
+        line_1_a.z_index = 1
+        line_1_b = Line(start=2*DOWN, end=2*RIGHT+2*DOWN)
+        line_1_b.z_index = 1
+        line_2 = Line(start=ORIGIN, end=2*DOWN)
+        line_2.z_index = 1
+
+        Book_I_Definitions.Definition_X(self, line_1_a, line_1_b, line_2)
+        self.wait()
+
+        self.clear()
+
 
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
         """
@@ -255,7 +274,7 @@ class Book_I_Definitions(Scene):
 
         return lines
     
-    def Definition_IX(scene : Scene, line_1 : Line, line_2 : Line, color : Color = YELLOW, other_angle : bool = False, angle_radius : int | float = 4):
+    def Definition_IX(scene : Scene, line_1 : Line, line_2 : Line, color : Color = YELLOW, other_angle : bool = False, angle_radius : int | float = 4, quadrant=(1,1)):
         """
         Ninth definition:
         And when the lines containing the angle are straight then the angle is called rectilinear.
@@ -269,9 +288,9 @@ class Book_I_Definitions(Scene):
         line_2_len = p.get_line_length(line_2)
         
         # create an angle with radius
-        angle = Angle(line1=line_1, line2=line_2, radius=min(line_1_len, line_2_len)/angle_radius, other_angle=other_angle).set_color(color)
+        angle = Angle(line1=line_1, line2=line_2, radius=min(line_1_len, line_2_len)/angle_radius, other_angle=other_angle, quadrant=quadrant).set_color(color)
         # crate an angle without a radiua
-        angle_helper = Angle(line1=line_1, line2=line_2, radius=0, other_angle=other_angle).set_color(color)
+        angle_helper = Angle(line1=line_1, line2=line_2, radius=0, other_angle=other_angle, quadrant=quadrant).set_color(color)
         
         q1 = angle.points #  save all coordinates of points of angle a1
         q2 = angle_helper.reverse_direction().points  #  save all coordinates of points of angle a1 (in reversed direction)
@@ -302,4 +321,50 @@ class Book_I_Definitions(Scene):
             
         return mfill
 
-    def Definition_X():
+    def Definition_X(scene: Scene, line_1 : Line, line_2 : Line, line_3 : Line = None):
+        """
+        Byrne: When one straight line standing on another straight line makes the adjacent angles equal,
+        each of these angles is called a right angle, and each of these lines is said to be perpendicular to the other.
+        Takes in (a) scene : Scene,
+        Two options (1) (b) line_1, (c) line_2, where line_1 and line_2 have one point in common.
+        Or (2) (b) (line_1), (c) line_2, (d) line_3, where line_1, _2, and _3 have one of the points the same.
+        
+        Euclid: And when a straight-line stood upon (another) straight-line makes adjacent angles 
+        (which are) equal to one another, each of the equal angles is a right-angle,
+        and the former straight- line is called perpendicular to that upon which it stands.
+        """
+
+        common_point = 0
+
+        if not (line_3):
+            pass # to be implemented later
+        else:
+            if p.are_points_equal(p.do_lines_have_common_points(line_1=line_1, line_2=line_2)[0], p.do_lines_have_common_points(line_1=line_1, line_2=line_3)[0]):
+                commmon_point = p.do_lines_have_common_points(line_1=line_1, line_2=line_2)[0]
+            else:
+                ValueError("The lines have to have a point in common");
+        
+        _line_1= Line()
+        if p.are_points_equal(common_point, line_1.start):
+            _line_1 = line_1
+        else:
+            _line_1 = Line(start=commmon_point, end=line_1.end)
+        
+        _line_2= Line()
+        if p.are_points_equal(common_point, line_2.start):
+            _line_2 = line_2
+        else:
+            _line_2 = Line(start=commmon_point, end=line_2.end)
+
+        _line_3= Line()
+        if p.are_points_equal(common_point, line_3.start):
+            _line_3 = line_3
+        else:
+            _line_3 = Line(start=commmon_point, end=line_3.end)
+
+        scene.add(line_1, line_2, line_3)
+
+        angle1 = Book_I_Definitions.Definition_IX(scene=scene, line_1=line_1, line_2=line_3, color=BLUE, angle_radius=2., other_angle=True, quadrant=(-1,-1))
+        angle2 = Book_I_Definitions.Definition_IX(scene=scene, line_1=line_2, line_2=line_3, color=BLUE, angle_radius=2., other_angle=False, quadrant=(1,-1))
+        # scene.play(Create(angle1))
+        # scene.play(Create(angle2))

@@ -106,3 +106,27 @@ class Proposition():
 
         return mfill
     
+
+    def get_points_of_lines(lines : list[Line]):
+
+        points = {}
+        i = 1
+        for line in lines:
+            points[format("line_" + str(i))] = { "start" : line.start, "end" : line.end}
+            i += 1
+
+        return points
+
+    def are_points_equal(pnt1, pnt2):
+
+        try:
+            if pnt1[0] != pnt2[0]:
+                return False
+            elif pnt1[1] != pnt2[1]:
+                return False
+            elif pnt1[2] != pnt2[2]:
+                return False
+            else:
+                return True
+        except:
+            ValueError("Need subscriptable objects, insted got: " + str(pnt1) + str(pnt2))
