@@ -124,6 +124,22 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        # Display the eleventh definition
+
+        Definicija_X = "Knjiga I, Definicija XI"
+        prop = f'<span fgcolor="{RED}">Topi kot</span> je tisti, ki je veˇcji od pravega.'
+
+        p.display_text(self, Definicija_X, prop)
+
+        line_1 = Line(start=2*DOWN, end=3*RIGHT+2*DOWN, color=BLUE)
+        line_2 = Line(start=line_1.start, end=line_1.end, color=YELLOW).rotate(angle = (3 / 4) * PI, about_point=line_1.start)
+        line_1.z_index = 1
+        line_2.z_index = 1
+
+        Book_I_Definitions.Definition_XI(self, line_1, line_2)
+        self.wait()
+
+        self.clear()
 
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
         """
@@ -368,3 +384,17 @@ class Book_I_Definitions(Scene):
         angle2 = Book_I_Definitions.Definition_IX(scene=scene, line_1=line_2, line_2=line_3, color=BLUE, angle_radius=2., other_angle=False, quadrant=(1,-1))
         # scene.play(Create(angle1))
         # scene.play(Create(angle2))
+
+    def Definition_XI(scene : Scene, line_1 : Line, line_2 : Line):
+
+        if abs(line_1.get_angle() - line_2.get_angle()) < (PI * (1/2)):
+            ValueError("The angle between the lines has to be larger than a right angle.")
+
+        if not (line_1 in scene.mobjects):
+            scene.add(line_1)
+        if not (line_2 in scene.mobjects):
+            scene.add(line_2)
+
+        angle = Book_I_Definitions.Definition_IX(scene, line_1, line_2, color=RED)
+
+        return angle
