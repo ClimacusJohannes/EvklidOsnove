@@ -126,17 +126,39 @@ class Book_I_Definitions(Scene):
 
         # Display the eleventh definition
 
-        Definicija_X = "Knjiga I, Definicija XI"
-        prop = f'<span fgcolor="{RED}">Topi kot</span> je tisti, ki je veˇcji od pravega.'
+        Definicija_XI = "Knjiga I, Definicija XI"
+        prop = f'<span fgcolor="{RED}">Topi kot</span> je tisti, ki je večji od pravega.'
 
-        p.display_text(self, Definicija_X, prop)
+        p.display_text(self, Definicija_XI, prop)
 
         line_1 = Line(start=2*DOWN, end=3*RIGHT+2*DOWN, color=BLUE)
         line_2 = Line(start=line_1.start, end=line_1.end, color=YELLOW).rotate(angle = (3 / 4) * PI, about_point=line_1.start)
+        line_3 = DashedLine(start=line_1.start, end=line_1.end).rotate(angle = (1 / 2) * PI, about_point=line_1.start)
         line_1.z_index = 1
         line_2.z_index = 1
 
         Book_I_Definitions.Definition_XI(self, line_1, line_2)
+        self.play(Create(line_3))
+        self.wait()
+
+        self.clear()
+
+        # Display the twelfth definition
+
+        Definicija_XII = "Knjiga I, Definicija XI"
+        prop = f'<span fgcolor="{RED}">Ostri kot</span> je tisti, ki je manjši od pravega.'
+
+        p.display_text(self, Definicija_XII, prop)
+
+        line_1 = Line(start=2*DOWN, end=3*RIGHT+2*DOWN, color=RED)
+        line_2 = Line(start=line_1.start, end=line_1.end, color=YELLOW).rotate(angle = (1 / 5) * PI, about_point=line_1.start)
+        line_3 = DashedLine(start=line_1.start, end=line_1.end).rotate(angle = (1 / 2) * PI, about_point=line_1.start)
+        line_1.z_index = 1
+        line_2.z_index = 1
+        line_3.z_index = 0
+
+        Book_I_Definitions.Definition_XII(self, line_1, line_2, color=BLUE)
+        self.play(Create(line_3))
         self.wait()
 
         self.clear()
@@ -385,16 +407,47 @@ class Book_I_Definitions(Scene):
         # scene.play(Create(angle1))
         # scene.play(Create(angle2))
 
-    def Definition_XI(scene : Scene, line_1 : Line, line_2 : Line):
+    def Definition_XI(scene : Scene, line_1 : Line, line_2 : Line, color : Color =RED):
+        """
+        Byrne: An obtuse angle is an angle greater than a right angle.
+        Euclid: An obtuse angle is greater than a right-angle.
+        Takes in (a) scene : Scene, (b) line_1 : Line, (c) line_2 : Line
+        Returns the obtuse angle between the lines.
+        """ 
+
+        other_angle=False
 
         if abs(line_1.get_angle() - line_2.get_angle()) < (PI * (1/2)):
-            ValueError("The angle between the lines has to be larger than a right angle.")
+            other_angle=True
 
         if not (line_1 in scene.mobjects):
             scene.add(line_1)
         if not (line_2 in scene.mobjects):
             scene.add(line_2)
 
-        angle = Book_I_Definitions.Definition_IX(scene, line_1, line_2, color=RED)
+        angle = Book_I_Definitions.Definition_IX(scene, line_1, line_2, color=color, other_angle=other_angle)
+
+        return angle
+    
+    def Definition_XII(scene : Scene, line_1 : Line, line_2 : Line, color : Color =RED):
+        """
+        Byrne: An acute angle is an angle less than a right angle.
+        Euclid: An acute angle is less than a right-angle.
+        Takes in (a) scene : Scene, (b) line_1 : Line, (c) line_2 : Line
+        Returns the acute angle between the lines.
+        """
+
+        other_angle=False
+
+        if abs(line_1.get_angle() - line_2.get_angle()) > (PI * (1/2)):
+            other_angle=True
+
+
+        if not (line_1 in scene.mobjects):
+            scene.add(line_1)
+        if not (line_2 in scene.mobjects):
+            scene.add(line_2)
+
+        angle = Book_I_Definitions.Definition_IX(scene, line_1, line_2, color=color, other_angle=other_angle)
 
         return angle
