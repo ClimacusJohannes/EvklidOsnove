@@ -163,6 +163,20 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        # Display the fifteenth  definition
+
+        Definicija_XV = "Knjiga I, Definicija XV"
+        prop = f'<span fgcolor="{YELLOW}">Krog</span> je ravni lik, omejen s takšno črto (ki se imenuje periferij\n(krožnica)), za katero so vse daljice (premice, ravne črte) potegnjene\nod ene točke, ki je v tem liku, do te črte (do periferije kroga),\nmed seboj enake.'
+
+        p.display_text(self, Definicija_XV, prop)
+
+        circle = Circle(radius=2, color=YELLOW).shift(DOWN*1.5)
+
+        Book_I_Definitions.Definition_XV(self, circle)
+        self.wait()
+
+        self.clear()
+
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
         """
         "First Definition: A point is that which has not parts"
@@ -451,3 +465,24 @@ class Book_I_Definitions(Scene):
         angle = Book_I_Definitions.Definition_IX(scene, line_1, line_2, color=color, other_angle=other_angle)
 
         return angle
+    
+    def Definition_XV(scene : Scene, circle : Circle):
+        """
+        Byrne: A circle is a plane figure, bounded by one continued line, called its circumference or periphery; 
+        and having a certain point within it, from which all straight lines drawn to its circumference are equal.
+        Euclid: A circle is a plane figure contained by a single line [which is called a circumference], 
+        (such that) all of the straight-lines radiating towards [the circumference] from a single point lying inside the figure are equal to one another.
+        """
+
+        if not circle in scene.mobjects:
+            scene.add(circle)
+
+        center = circle.get_arc_center()
+        point_at_angle = circle.point_at_angle(0)
+
+        line = Line(start=center, end=point_at_angle, color=circle.color)
+
+        scene.play(Create(line))
+        scene.play(Rotate(line, PI*4, about_point=center, run_time=3))
+
+        return circle
