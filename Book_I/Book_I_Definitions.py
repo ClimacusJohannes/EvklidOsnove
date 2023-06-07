@@ -177,6 +177,33 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        # Display the sixteenth definition
+
+        Definicija_XVI = "Knjiga I, Definicija XVI"
+        prop = f'<span fgcolor="{YELLOW}">Ta točka</span> se imenuje središče kroga.'
+
+        p.display_text(self, Definicija_XVI, prop)
+
+        Book_I_Definitions.Definition_XVI(self, circle)
+        self.wait()
+
+        self.clear()
+
+        # Display the seventeenth definition
+
+        Definicija_XVII = "Knjiga I, Definicija XVII"
+        prop = f'<span fgcolor="{YELLOW}">Premer</span> <span fgcolor="{RED}">kroga</span> je vsaka daljica (premica, ravna črta),\nki gre skozi središče kroga in je na vsaki strani omejena s periferijo kroga;\non razpolavlja krog.'
+
+        p.display_text(self, Definicija_XVII, prop)
+        circle.color = RED
+
+        Book_I_Definitions.Definition_XVII(self, circle)
+        self.wait()
+
+        self.clear()
+
+
+
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
         """
         "First Definition: A point is that which has not parts"
@@ -486,3 +513,41 @@ class Book_I_Definitions(Scene):
         scene.play(Rotate(line, PI*4, about_point=center, run_time=3))
 
         return circle
+    
+    def Definition_XVI(scene : Scene, circle : Circle):
+        """
+        Byrne: This point (from which the equal lines are drawn) is called the centre of the circle.
+        Euclid: And the point is called the center of the circle.
+        """
+
+        if not circle in scene.mobjects:
+            scene.add(circle)
+
+        center = circle.get_arc_center()
+        
+        dot = Dot(center, color=circle.color)
+
+        scene.play(Create(dot))
+
+        return dot
+    
+    def Definition_XVII(scene : Scene, circle : Circle, color : Color=YELLOW):
+        """
+        Byrne: A diameter of a circle is a straight line drawn through the centre,
+        terminated both ways in the circumference.
+        Euclid: And a diameter of the circle is any straight-line, 
+        being drawn through the center, which is brought to an end in each direction by the circumference of the circle. 
+        And any such (straight-line) cuts the circle in half.
+        """
+
+        if not circle in scene.mobjects:
+            scene.add(circle)
+
+        end = circle.point_at_angle(0)
+        start = circle.point_at_angle(PI)
+
+        diameter = Line(start=start, end=end, color=color)
+
+        scene.play(Create(diameter))
+
+        return diameter
