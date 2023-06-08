@@ -215,6 +215,20 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        # Display definition no. 19
+
+        Definicija_XIX = "Knjiga I, Definicija XIX"
+        prop = f'Ravnolinijski (premočrtni) liki so tisti, ki jih omejujejo daljice (premice, ravne črte);\n<span fgcolor="{RED}">tristranski</span> so tisti, ki so omejeni s tremi, <span fgcolor="{BLUE}">štiristranski</span> s štirimi,\n<span fgcolor="{YELLOW}">večstranski</span> z več kot štirimi daljicami (premicami, ravnimi črtami).'
+
+        p.display_text(self, Definicija_XIX, prop)
+        circle.color = YELLOW
+
+        Book_I_Definitions.Definition_XIX(self)
+        self.wait()
+
+        self.clear()
+
+
 
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
         """
@@ -583,3 +597,14 @@ class Book_I_Definitions(Scene):
         scene.remove(circle)
         scene.play(Create(arc))
         # scene.play(Create(half_circle))
+
+    def Definition_XIX(scene : Scene):
+        """
+        Euclid: Rectilinear figures are those figures contained by straight-lines: 
+        trilateral figures being con- tained by three straight-lines, quadrilateral by four, 
+        and multilateral by more than four.
+        """
+
+        scene.play(Create(RegularPolygon(n=3, color=RED).shift(4* LEFT + DOWN)))
+        scene.play(Create(RegularPolygon(n=4, color=BLUE).shift(DOWN)))
+        scene.play(Create(RegularPolygon(n=5, color=YELLOW).shift(4* RIGHT + DOWN)))
