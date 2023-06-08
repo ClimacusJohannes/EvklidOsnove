@@ -202,6 +202,18 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        # Display the eighteenth definition
+
+        Definicija_XVIII = "Knjiga I, Definicija XVIII"
+        prop = f'Polkrog je lik omejen s premerom in s periferijo, ki jo je on odsekal;\nsredišče polkroga je isto kot središče kroga.'
+
+        p.display_text(self, Definicija_XVIII, prop)
+        circle.color = YELLOW
+
+        Book_I_Definitions.Definition_XVIII(self, circle)
+        self.wait()
+
+        self.clear()
 
 
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
@@ -551,3 +563,23 @@ class Book_I_Definitions(Scene):
         scene.play(Create(diameter))
 
         return diameter
+    
+    def Definition_XVIII(scene: Scene, circle : Circle):
+        """
+        Byrne: A semicircle is the figure contained by the diameter, and the part of the circle cut off by the diameter.
+        Euclid: And a semi-circle is the figure contained by the diameter and the circumference it cuts off. 
+        And the center of the semi-circle is the same (point) as (the center of) the circle.
+        """
+
+        diameter = Book_I_Definitions.Definition_XVII(scene, circle, color=BLUE)
+
+        dashed_circle = DashedVMobject(circle)
+        arc = ArcBetweenPoints(radius=circle.radius, start=circle.point_at_angle(PI), end=circle.point_at_angle(0), angle=PI, color=circle.color, fill_color=YELLOW, fill_opacity=0.5).rotate(PI, about_point=circle.get_center())
+        # half_circle = dashed_circle.add_line_to(Dot(circle.point_at_angle(PI)).rotate(PI, about_point=circle.get_center()))
+        # half_circle.fill_opacity = 0.5
+        # half_circle.fill_color(YELLOW)
+
+        scene.add(dashed_circle)
+        scene.remove(circle)
+        scene.play(Create(arc))
+        # scene.play(Create(half_circle))
