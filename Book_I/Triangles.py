@@ -12,15 +12,72 @@ class ScaleneTriangle(Polygram):
         self.c = Line(start=point_a, end=point_b)
         self.add(self.c)
 
-        self.point_a = Point(point_a)
-        self.point_b = Point(point_b)
-        self.point_c = Point(point_c)
+        self.point_A = Dot(point_a)
+        self.point_B = Dot(point_b)
+        self.point_C = Dot(point_c)
 
         self.lines = {
             "a" : self.a,
             "b" : self.b,
             "c" : self.c
         }
+
+        self.dots = {
+            "A" : self.point_A,
+            "B" : self.point_B,
+            "C" : self.point_C,
+        }
+
+        self.angles = {}
+        self.calculate_angles()
+
+        self.heights = {}
+        self.calculate_heights()
+
+    def calculate_angles(self):
+        for angle in ["alpha", "beta", "gamma"]:
+            value = self.calculate_individual_angle(angle)
+
+            self.angles[angle] = value
+
+    def calculate_individual_angle(self, angle : str):
+        angle = angle.lower()
+        if angle == "alpha":
+            alpha = Angle(self.b, self.c)
+            if alpha.get_value() > PI :
+                alpha = Angle(self.b, self.c, other_angle=True)
+        elif angle == "beta":
+            alpha = Angle(self.b, self.c)
+            if alpha.get_value() > PI :
+                alpha = Angle(self.a, self.c, other_angle=True)
+        elif angle == "gamma":
+            alpha = Angle(self.a, self.b)
+            if alpha.get_value() > PI :
+                alpha = Angle(self.b, self.c, other_angle=True)
+        else:
+            ValueError("A triangle has only three angles: alpha, beta, gamma. You tried to calculate: " + angle)
+
+
+    def calculate_heights(self):
+        for line in ["a", "b", "c"]:
+            height = self.calculate_individual_height(self.get_dot(line), self.get_line(line))
+            name_of_height = "V" + line
+            self.heights[name_of_height] = height
+
+    def calculate_individual_height(self, dot : Dot, line : Line):
+        return p.get_line_length(Line(start=line.get_projection(dot.get_center()), end=dot.get_center()))
+
+    def get_line(self, line : str):
+        line = line.lower()
+        if (line != "a") and (line != "b") and (line != "c"):
+            ValueError("A triangle has only three lines: a, b and c. You tried to get line: " + line)
+        return self.lines[line]
+
+    def get_dot(self, dot : str):
+        dot = dot.upper()
+        if (dot != "A") and (dot != "B") and (dot != "C"):
+            ValueError("A triangle has only three dots/vertices: A, B and C. You tried to get dot: " + dot)
+        return self.dots[dot]
 
     def create_angle_between_lines(self, line1 : Line, line2 : Line, color=WHITE, rotate=False, rotate_for=0, about_point=ORIGIN, other_angle=False, adjacent_angle=False, quadrant=(1,1)) -> Mobject:
         line1_len = p.get_line_length(line1)
