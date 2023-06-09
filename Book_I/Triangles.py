@@ -1,6 +1,9 @@
 from manim import *
+from manim import WHITE
 from modules import Proposition as p 
-from Book_I_Definitions import *
+from Book_I_Definitions import Book_I_Definitions
+from manim.utils.color import Color
+
 
 class ScaleneTriangle(Polygram):
     def __init__(self, point_a, point_b, point_c, color=WHITE, **kwargs):
@@ -15,7 +18,6 @@ class ScaleneTriangle(Polygram):
         self.c = Line(start=point_a, end=point_b)
         self.add(self.c)
         self.c_opposite = Line(start=point_b, end=point_a)
-
 
         self.point_A = Dot(point_a)
         self.point_B = Dot(point_b)
@@ -145,12 +147,37 @@ class ScaleneTriangle(Polygram):
 
         scene.play(FadeIn(group))
 
-    def color_angle(self, scene : Scene, angle : str):
+    def color_angle(self, scene : Scene, angle : str, color : Color = YELLOW):
         if angle == "alpha":
-            a = Book_I_Definitions.Definition_IX(scene, self.b, self.c)
+            a = Angle(self.b, self.c)
+            if a.get_value() > PI :
+                Book_I_Definitions.Definition_IX(scene, self.b, self.c, other_angle=True, color=color) 
+            else:          
+                Book_I_Definitions.Definition_IX(scene, self.b, self.c, other_angle=False, color=color)           
         elif angle == "beta":
-            a = Book_I_Definitions.Definition_IX(scene, self.c_opposite, self.a)
+            a = Angle(self.c_opposite, self.a)
+            if a.get_value() > PI :
+                Book_I_Definitions.Definition_IX(scene, self.c_opposite, self.a, other_angle=True, color=color)
+            else:
+                Book_I_Definitions.Definition_IX(scene, self.c_opposite, self.a, other_angle=False, color=color)
         elif angle == "gamma":
-            a = Book_I_Definitions.Definition_IX(scene, self.a_opposite, self.b_opposite)
+            a = Angle(self.a_opposite, self.b_opposite)
+            if a.get_value() > PI :
+                Book_I_Definitions.Definition_IX(scene, self.a_opposite, self.b_opposite, other_angle=True, color=color)
+            else:
+                Book_I_Definitions.Definition_IX(scene, self.a_opposite, self.b_opposite, other_angle=False, color=color)
         else:
             ValueError("A triangle has only three angles: alpha, beta, gamma. You tried to color: " + angle)
+
+
+class RightTriangle(ScaleneTriangle):
+    def __init__(self, point_a, point_b, point_c, color=WHITE, **kwargs):
+
+        (point_a, point_b, point_c) = self.rearange_points(point_a, point_b, point_c)
+
+        super().__init__(point_a, point_b, point_c, color, **kwargs)
+
+        
+
+    def rearange_points():
+        pass

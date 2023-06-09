@@ -421,6 +421,9 @@ class Book_I_Definitions(Scene):
         #     #     common_point = line1.end
         #     mfill.rotate(angle=rotate_for, about_point=about_point)
 
+        line_1.z_index += 1
+        line_2.z_index += 1
+        mfill.z_index = 0
         scene.add(line_1, line_2)
         scene.play(Create(mfill))
             
