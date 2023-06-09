@@ -1,5 +1,6 @@
 from manim import *
 from modules import Proposition as p 
+from Book_I_Definitions import *
 
 class ScaleneTriangle(Polygram):
     def __init__(self, point_a, point_b, point_c, color=WHITE, **kwargs):
@@ -7,10 +8,14 @@ class ScaleneTriangle(Polygram):
 
         self.a = Line(start=point_b, end=point_c)
         self.add(self.a)
+        self.a_opposite = Line(start=point_c, end=point_b)
         self.b = Line(start=point_a, end=point_c)
         self.add(self.b)
+        self.b_opposite = Line(start=point_c, end=point_a)
         self.c = Line(start=point_a, end=point_b)
         self.add(self.c)
+        self.c_opposite = Line(start=point_b, end=point_a)
+
 
         self.point_A = Dot(point_a)
         self.point_B = Dot(point_b)
@@ -38,25 +43,29 @@ class ScaleneTriangle(Polygram):
         for angle in ["alpha", "beta", "gamma"]:
             value = self.calculate_individual_angle(angle)
 
-            self.angles[angle] = value
+            self.angles[angle] = value / DEGREES
+        print(self.angles)
 
     def calculate_individual_angle(self, angle : str):
         angle = angle.lower()
+        a = 0
         if angle == "alpha":
-            alpha = Angle(self.b, self.c)
-            if alpha.get_value() > PI :
-                alpha = Angle(self.b, self.c, other_angle=True)
+            a = Angle(self.b, self.c)
+            if a.get_value() > PI :
+                a = Angle(self.b, self.c, other_angle=True)
         elif angle == "beta":
-            alpha = Angle(self.b, self.c)
-            if alpha.get_value() > PI :
-                alpha = Angle(self.a, self.c, other_angle=True)
+            a = Angle(self.c_opposite, self.a)
+            if a.get_value() > PI :
+                print(str(a.get_value()) + " is too large...")
+                a = Angle(self.c_opposite, self.a, other_angle=True)
         elif angle == "gamma":
-            alpha = Angle(self.a, self.b)
-            if alpha.get_value() > PI :
-                alpha = Angle(self.b, self.c, other_angle=True)
+            a = Angle(self.a_opposite, self.b_opposite)
+            if a.get_value() > PI :
+                a = Angle(self.a_opposite, self.b_opposite, other_angle=True)
         else:
             ValueError("A triangle has only three angles: alpha, beta, gamma. You tried to calculate: " + angle)
-
+        
+        return abs(a.get_value())
 
     def calculate_heights(self):
         for line in ["a", "b", "c"]:
@@ -136,3 +145,12 @@ class ScaleneTriangle(Polygram):
 
         scene.play(FadeIn(group))
 
+    def color_angle(self, scene : Scene, angle : str):
+        if angle == "alpha":
+            a = Book_I_Definitions.Definition_IX(scene, self.b, self.c)
+        elif angle == "beta":
+            a = Book_I_Definitions.Definition_IX(scene, self.c_opposite, self.a)
+        elif angle == "gamma":
+            a = Book_I_Definitions.Definition_IX(scene, self.a_opposite, self.b_opposite)
+        else:
+            ValueError("A triangle has only three angles: alpha, beta, gamma. You tried to color: " + angle)
