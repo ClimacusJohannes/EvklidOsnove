@@ -46,7 +46,7 @@ class ScaleneTriangle(Polygram):
             value = self.calculate_individual_angle(angle)
 
             self.angles[angle] = value / DEGREES
-        print(self.angles)
+        # print(self.angles)
 
     def calculate_individual_angle(self, angle : str):
         angle = angle.lower()
@@ -58,14 +58,14 @@ class ScaleneTriangle(Polygram):
         elif angle == "beta":
             a = Angle(self.c_opposite, self.a)
             if a.get_value() > PI :
-                print(str(a.get_value()) + " is too large...")
+                # print(str(a.get_value()) + " is too large...")
                 a = Angle(self.c_opposite, self.a, other_angle=True)
         elif angle == "gamma":
             a = Angle(self.a_opposite, self.b_opposite)
             if a.get_value() > PI :
                 a = Angle(self.a_opposite, self.b_opposite, other_angle=True)
         else:
-            ValueError("A triangle has only three angles: alpha, beta, gamma. You tried to calculate: " + angle)
+            raise ValueError("A triangle has only three angles: alpha, beta, gamma. You tried to calculate: " + angle)
         
         return abs(a.get_value())
 
@@ -81,13 +81,13 @@ class ScaleneTriangle(Polygram):
     def get_line(self, line : str):
         line = line.lower()
         if (line != "a") and (line != "b") and (line != "c"):
-            ValueError("A triangle has only three lines: a, b and c. You tried to get line: " + line)
+            raise ValueError("A triangle has only three lines: a, b and c. You tried to get line: " + line)
         return self.lines[line]
 
     def get_dot(self, dot : str):
         dot = dot.upper()
         if (dot != "A") and (dot != "B") and (dot != "C"):
-            ValueError("A triangle has only three dots/vertices: A, B and C. You tried to get dot: " + dot)
+            raise ValueError("A triangle has only three dots/vertices: A, B and C. You tried to get dot: " + dot)
         return self.dots[dot]
 
     def create_angle_between_lines(self, line1 : Line, line2 : Line, color=WHITE, rotate=False, rotate_for=0, about_point=ORIGIN, other_angle=False, adjacent_angle=False, quadrant=(1,1)) -> Mobject:
@@ -124,8 +124,8 @@ class ScaleneTriangle(Polygram):
 
     def show_points(self, scene : Scene, color=WHITE):
         points = self.get_vertices()
-        print(self.get_vertices())
-        print(points)
+        # print(self.get_vertices())
+        # print(points)
 
         dot_a = Dot(points[2], radius=0.05, color=color) 
         dot_b = Dot(points[1], radius=0.05, color=color) 
@@ -167,17 +167,52 @@ class ScaleneTriangle(Polygram):
             else:
                 Book_I_Definitions.Definition_IX(scene, self.a_opposite, self.b_opposite, other_angle=False, color=color)
         else:
-            ValueError("A triangle has only three angles: alpha, beta, gamma. You tried to color: " + angle)
+            raise ValueError("A triangle has only three angles: alpha, beta, gamma. You tried to color: " + angle)
 
 
 class RightTriangle(ScaleneTriangle):
     def __init__(self, point_a, point_b, point_c, color=WHITE, **kwargs):
 
-        (point_a, point_b, point_c) = self.rearange_points(point_a, point_b, point_c)
+        helper = ScaleneTriangle(point_a, point_b, point_c)
+        print("Constructed a ScaleneTriangle with " + str(helper.angles))
 
-        super().__init__(point_a, point_b, point_c, color, **kwargs)
+        result = RightTriangle.rearange_points(helper)
+        try:
+            (a, b, c) = result
+        except:
+            raise ValueError("This is not a right triangle! Give points for a right triangle!")
+
+        super().__init__(a, b, c, color, **kwargs)
 
         
 
-    def rearange_points():
-        pass
+
+    def rearange_points(helper : ScaleneTriangle):
+        
+        final_angle = None
+        for angle in ["alpha", "beta", "gamma"]:
+            if helper.angles[angle] == (PI / 2) / DEGREES:
+                final_angle = angle
+                print("Got the right angle: " + angle)
+                break
+        
+        if final_angle == None:
+            raise ValueError("This is not a right triangle! Give points for a right triangle!")
+
+
+        if final_angle == "alpha":
+            point_c = helper.point_A.get_arc_center()
+            point_a = helper.point_C.get_arc_center()
+            point_b = helper.point_B.get_arc_center()
+        elif final_angle == "beta":
+            point_c = helper.point_B.get_arc_center()
+            point_b = helper.point_C.get_arc_center()
+            point_a = helper.point_A.get_arc_center()
+        else:
+            point_c = helper.point_C.get_arc_center()
+            point_b = helper.point_B.get_arc_center()   
+            point_a = helper.point_A.get_arc_center()
+        return (point_a, point_b, point_c)
+
+
+        
