@@ -3,6 +3,7 @@ from manim.utils.color import Color
 
 
 from modules import Proposition as p
+import Triangles 
 
 class Book_I_Definitions(Scene):
 
@@ -228,6 +229,17 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        # Display definition no. 20
+
+        Definicija_XX = "Knjiga I, Definicija XX"
+        prop = f' Med tristranskimi liki enakostranični trikotnik ima tri enake stranice,\nenakokrak ima samo dve enaki, raznostranični pa tri neenake stranice.'
+        p.display_text(self, Definicija_XX, prop)
+        circle.color = YELLOW
+
+        Book_I_Definitions.Definition_XX(self)
+        self.wait()
+
+        self.clear()
 
 
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
@@ -611,3 +623,13 @@ class Book_I_Definitions(Scene):
         scene.play(Create(RegularPolygon(n=3, color=RED).shift(4* LEFT + DOWN)))
         scene.play(Create(RegularPolygon(n=4, color=BLUE).shift(DOWN)))
         scene.play(Create(RegularPolygon(n=5, color=YELLOW).shift(4* RIGHT + DOWN)))
+
+    def Definition_XX(scene : Scene):
+        """
+        Euclid: 
+        And of the trilateral figures: an equilateral triangle is that having three equal sides, 
+        an isosceles (triangle) that having only two equal sides, and a scalene (triangle) that having three unequal sides.
+        """
+        scene.play(Create(RegularPolygram(num_vertices=3).shift(4*LEFT + DOWN)))
+        scene.play(Create(Triangles.IsoscelesTriangle(point_a=LEFT, point_b=RIGHT, side_len=2.5, color=YELLOW).shift(DOWN)))
+        scene.play(Create(RegularPolygram(num_vertices=3).shift(4*RIGHT + DOWN)))

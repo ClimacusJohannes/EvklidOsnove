@@ -1,22 +1,23 @@
 from manim import *
 from manim import WHITE
+from numpy import matmul, array, sqrt
 from modules import Proposition as p 
-from Book_I_Definitions import Book_I_Definitions
+import Book_I_Definitions
 from manim.utils.color import Color
 
 
-class ScaleneTriangle(Polygram):
+class EuclidTriangle(Polygram):
     def __init__(self, point_a, point_b, point_c, color=WHITE, **kwargs):
         super().__init__([point_a, point_b, point_c, point_a], color=color, **kwargs)
 
         self.a = Line(start=point_b, end=point_c)
-        self.add(self.a)
+        # self.add(self.a)
         self.a_opposite = Line(start=point_c, end=point_b)
         self.b = Line(start=point_a, end=point_c)
-        self.add(self.b)
+        # self.add(self.b)
         self.b_opposite = Line(start=point_c, end=point_a)
         self.c = Line(start=point_a, end=point_b)
-        self.add(self.c)
+        # self.add(self.c)
         self.c_opposite = Line(start=point_b, end=point_a)
 
         self.point_A = Dot(point_a)
@@ -170,11 +171,11 @@ class ScaleneTriangle(Polygram):
             raise ValueError("A triangle has only three angles: alpha, beta, gamma. You tried to color: " + angle)
 
 
-class RightTriangle(ScaleneTriangle):
-    def __init__(self, point_a, point_b, point_c, color=WHITE, **kwargs):
+class RightTriangle(EuclidTriangle):
+    def __init__(self, point_a=LEFT, point_b=RIGHT, point_c=LEFT+UP, color=WHITE, **kwargs):
 
-        helper = ScaleneTriangle(point_a, point_b, point_c)
-        print("Constructed a ScaleneTriangle with " + str(helper.angles))
+        helper = EuclidTriangle(point_a, point_b, point_c)
+        print("Constructed a EuclidTriangle with " + str(helper.angles))
 
         result = RightTriangle.rearange_points(helper)
         try:
@@ -187,7 +188,7 @@ class RightTriangle(ScaleneTriangle):
         
 
 
-    def rearange_points(helper : ScaleneTriangle):
+    def rearange_points(helper : EuclidTriangle):
         
         final_angle = None
         for angle in ["alpha", "beta", "gamma"]:
@@ -215,4 +216,13 @@ class RightTriangle(ScaleneTriangle):
         return (point_a, point_b, point_c)
 
 
+class IsoscelesTriangle(EuclidTriangle):
+    def __init__(self, point_a, point_b, side_len, color=WHITE, **kwargs):
         
+        daljica = Line(point_a, point_b)
+        daljica_length = np.linalg.norm(daljica.end - daljica.start)
+        daljica_slope = (daljica.end - daljica.start) / np.linalg.norm(daljica.end - daljica.start)
+
+        point_c = ( daljica.start + ( (daljica_length / 2) * (daljica_slope))) + (matmul(daljica_slope, array([[0,-1,0],[1,0,0],[0,0,0]]) * (sqrt(side_len*side_len - (daljica_length / 2) * (daljica_length / 2)))) * -1.)
+        
+        super().__init__(point_a, point_b, point_c, color, **kwargs)
