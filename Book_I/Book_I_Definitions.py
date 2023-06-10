@@ -232,7 +232,7 @@ class Book_I_Definitions(Scene):
         # Display definition no. 20
 
         Definicija_XX = "Knjiga I, Definicija XX"
-        prop = f' Med tristranskimi liki enakostranični trikotnik ima tri enake stranice,\nenakokrak ima samo dve enaki, raznostranični pa tri neenake stranice.'
+        prop = f' Med tristranskimi liki <span fgcolor="{BLUE}">enakostranični trikotnik</span> ima tri enake stranice,\n<span fgcolor="{YELLOW}">enakokrak</span> ima samo dve enaki, <span fgcolor="{RED}">raznostranični</span> pa tri neenake stranice.'
         p.display_text(self, Definicija_XX, prop)
         circle.color = YELLOW
 
@@ -631,5 +631,5 @@ class Book_I_Definitions(Scene):
         an isosceles (triangle) that having only two equal sides, and a scalene (triangle) that having three unequal sides.
         """
         scene.play(Create(RegularPolygram(num_vertices=3).shift(4*LEFT + DOWN)))
-        scene.play(Create(Triangles.IsoscelesTriangle(point_a=LEFT, point_b=RIGHT, side_len=2.5, color=YELLOW).shift(DOWN)))
-        scene.play(Create(RegularPolygram(num_vertices=3).shift(4*RIGHT + DOWN)))
+        scene.play(Create(Triangles.IsoscelesTriangle(point_a=LEFT, point_b=RIGHT, side_len=2.5, color=YELLOW).shift(2*DOWN)))
+        scene.play(Create(Triangles.EuclidTriangle(point_a=LEFT, point_b=DOWN+RIGHT, point_c=UP, color=RED).shift(4*RIGHT + (1/2)*DOWN)))
