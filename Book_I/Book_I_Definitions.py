@@ -241,6 +241,17 @@ class Book_I_Definitions(Scene):
 
         self.clear()
 
+        # Display definition no. 21
+        
+        Definicija_XXI = "Knjiga I, Definicija XXI"
+        prop = f'Dalje, med tristranskimi liki je <span fgcolor="{YELLOW}">pravokotni</span> trikotnik tisti, ki ima pravi kot,\n<span fgcolor="{RED}">topokotni</span> tisti, ki ima topi kot, <span fgcolor="{BLUE}">ostrokotni</span> pa tisti, ki ima tri ostre kote.'
+        p.display_text(self, Definicija_XXI, prop)
+
+        Book_I_Definitions.Definition_XXI(self)
+        
+        
+        
+        prop = f'Med štiristranskimi liki kvadrat je enakostraniˇcen in s pravimi koti; pravokotnik s pravimi koti in z neenakimi stranicami; romb z enakimi stranicami in nepravokoten; romboid tisti, ki ima enake nasprotne stranice in enake nasprotne kote, vendar ni ne enakostraniˇcen, ne pravokoten. Vse ostale ˇstiristranske like pa imenujemo trapezi.'
 
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
         """
@@ -633,3 +644,15 @@ class Book_I_Definitions(Scene):
         scene.play(Create(RegularPolygram(num_vertices=3).shift(4*LEFT + DOWN)))
         scene.play(Create(Triangles.IsoscelesTriangle(point_a=LEFT, point_b=RIGHT, side_len=2.5, color=YELLOW).shift(2*DOWN)))
         scene.play(Create(Triangles.EuclidTriangle(point_a=LEFT, point_b=DOWN+RIGHT, point_c=UP, color=RED).shift(4*RIGHT + (1/2)*DOWN)))
+
+    def Definition_XXI(scene : Scene):
+        """
+        Euclid: And further of the trilateral figures: a right-angled triangle is that having a right-angle, 
+        an obtuse-angled (triangle) that having an obtuse angle, and an acute-angled (triangle) that having three acute angles.
+        """
+        
+        # play the creation of the right-angled triangle
+        scene.play(Create(Triangles.RightAngledTriangle(point_a=2*LEFT, point_b=2*RIGHT, point_c=2*LEFT+2*UP, color=YELLOW).shift(4*LEFT + 2*DOWN)))
+        scene.play(Create(Triangles.EuclidTriangle(point_a=ORIGIN, point_b=2*RIGHT, point_c=2*LEFT+2*UP, color=RED).shift(2*DOWN)))
+        scene.play(Create(Triangles.EuclidTriangle(point_a=LEFT, point_b=2*RIGHT, point_c=RIGHT+2*UP, color=BLUE).shift(4*RIGHT + 2*DOWN)))
+        

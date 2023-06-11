@@ -171,13 +171,13 @@ class EuclidTriangle(Polygram):
             raise ValueError("A triangle has only three angles: alpha, beta, gamma. You tried to color: " + angle)
 
 
-class RightTriangle(EuclidTriangle):
+class RightAngledTriangle(EuclidTriangle):
     def __init__(self, point_a=LEFT, point_b=RIGHT, point_c=LEFT+UP, color=WHITE, **kwargs):
 
         helper = EuclidTriangle(point_a, point_b, point_c)
         print("Constructed a EuclidTriangle with " + str(helper.angles))
 
-        result = RightTriangle.rearange_points(helper)
+        result = RightAngledTriangle.rearange_points(helper)
         try:
             (a, b, c) = result
         except:
