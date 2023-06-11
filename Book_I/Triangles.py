@@ -175,7 +175,7 @@ class RightAngledTriangle(EuclidTriangle):
     def __init__(self, point_a=LEFT, point_b=RIGHT, point_c=LEFT+UP, color=WHITE, **kwargs):
 
         helper = EuclidTriangle(point_a, point_b, point_c)
-        print("Constructed a EuclidTriangle with " + str(helper.angles))
+        # print("Constructed a EuclidTriangle with " + str(helper.angles))
 
         result = RightAngledTriangle.rearange_points(helper)
         try:
@@ -194,7 +194,7 @@ class RightAngledTriangle(EuclidTriangle):
         for angle in ["alpha", "beta", "gamma"]:
             if helper.angles[angle] == (PI / 2) / DEGREES:
                 final_angle = angle
-                print("Got the right angle: " + angle)
+                # print("Got the right angle: " + angle)
                 break
         
         if final_angle == None:

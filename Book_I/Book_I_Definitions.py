@@ -4,6 +4,7 @@ from manim.utils.color import Color
 
 from modules import Proposition as p
 import Triangles 
+import FourSidedFigures
 
 class Book_I_Definitions(Scene):
 
@@ -248,10 +249,20 @@ class Book_I_Definitions(Scene):
         p.display_text(self, Definicija_XXI, prop)
 
         Book_I_Definitions.Definition_XXI(self)
+        self.wait()
+
+        self.clear()
         
+        # Display definition no. 22
         
-        
-        prop = f'Med štiristranskimi liki kvadrat je enakostraniˇcen in s pravimi koti; pravokotnik s pravimi koti in z neenakimi stranicami; romb z enakimi stranicami in nepravokoten; romboid tisti, ki ima enake nasprotne stranice in enake nasprotne kote, vendar ni ne enakostraniˇcen, ne pravokoten. Vse ostale ˇstiristranske like pa imenujemo trapezi.'
+        Definicija_XXII = "Knjiga I, Definicija XXII"
+        prop = f'Med štiristranskimi liki <span fgcolor="{BLUE}">kvadrat</span> je enakostraničen in s pravimi koti; \n<span fgcolor="{RED}">pravokotnik</span> s pravimi koti in z neenakimi stranicami;\n<span fgcolor="{YELLOW}">romb</span> z enakimi stranicami in nepravokoten;\n<span fgcolor="{GREEN}">romboid</span> tisti, ki ima enake nasprotne stranice in enake nasprotne kote, vendar ni ne enakostraničen, ne pravokoten.\nVse ostale štiristranske like pa imenujemo <span fgcolor="{ORANGE}">trapezi</span>.'
+        p.display_text(self, Definicija_XXII, prop)
+
+        Book_I_Definitions.Definition_XXII(self)
+        self.wait()
+
+        self.clear()
 
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
         """
@@ -655,4 +666,23 @@ class Book_I_Definitions(Scene):
         scene.play(Create(Triangles.RightAngledTriangle(point_a=2*LEFT, point_b=2*RIGHT, point_c=2*LEFT+2*UP, color=YELLOW).shift(4*LEFT + 2*DOWN)))
         scene.play(Create(Triangles.EuclidTriangle(point_a=ORIGIN, point_b=2*RIGHT, point_c=2*LEFT+2*UP, color=RED).shift(2*DOWN)))
         scene.play(Create(Triangles.EuclidTriangle(point_a=LEFT, point_b=2*RIGHT, point_c=RIGHT+2*UP, color=BLUE).shift(4*RIGHT + 2*DOWN)))
+        
+    def Definition_XXII(scene : Scene):
+        """
+        Euclid: And of the quadrilateral figures: 
+        a square is that which is right-angled and equilateral, 
+        a rectangle that which is right-angled but not equilateral, 
+        a rhombus that which is equilateral but not right-angled, 
+        and a rhomboid that having opposite sides and angles equal to one another which is neither right-angled nor equilateral. 
+        And let quadrilateral figures besides these be called trapezia.
+        prop = f'Med štiristranskimi liki <span fgcolor="{BLUE}">kvadrat</span> je enakostraničen in s pravimi koti; <span fgcolor="{RED}"pravokotnik</span> s pravimi koti in z neenakimi stranicami; <span fgcolor="{YELLOW}">romb</span> z enakimi stranicami in nepravokoten; <span fgcolor="{GREEN}">romboid</span> tisti, ki ima enake nasprotne stranice in enake nasprotne kote, vendar ni ne enakostraničen, ne pravokoten. Vse ostale štiristranske like pa imenujemo <span fgcolor="{ORANGE}"trapezi</span>.'
+        """
+        square = Square(side_length=2, color=BLUE).shift(4*LEFT + DOWN)
+        scene.play(Create(square))
+        rectangle = Rectangle(height=2, width=3, color=RED).shift(2*DOWN)
+        scene.play(Create(rectangle))
+        rhombus = FourSidedFigures.Rhombus(side_len=2, color=YELLOW).shift(3*RIGHT + DOWN)
+        scene.play(Create(rhombus))
+        scene.remove(square, rectangle, rhombus)
+        scene.wait(10)
         

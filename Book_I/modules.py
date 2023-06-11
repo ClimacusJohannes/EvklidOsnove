@@ -14,7 +14,8 @@ class Proposition():
         scene.play(Write(title))
         scene.wait()
         # scene.remove(title)
-        scene.play(Write(prop))
+        run_time = len(prop) / 15
+        scene.play(Write(prop, run_time=run_time))
         # scene.remove(prop)
         scene.wait()
 
