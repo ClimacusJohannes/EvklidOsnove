@@ -721,7 +721,7 @@ class Book_I_Definitions(Scene):
             lines.append((line_1, line_1_ex, line_2, line_2_ex))
             
         
-        (line_1, line_2, third_line, fourth_line) = lines[0]
+        (line_1, line_2, _3, _4) = lines[0]
         scene.add(line_1, line_2)
         for (_line_1, line_1_ex, _line_2, line_2_ex) in lines:
             scene.play(Transform(line_1, line_1_ex))
