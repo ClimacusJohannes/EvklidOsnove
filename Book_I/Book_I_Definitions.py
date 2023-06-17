@@ -263,7 +263,20 @@ class Book_I_Definitions(Scene):
         self.wait()
 
         self.clear()
-
+        
+        # Display definition no. 23
+        
+        Definicija_XXIII = "Knjiga I, Definicija XXIII"
+        prop = f'Vzporedni sta tisti daljici (premici, ravni črti), ki se nahajata v isti ravnini\nin se ne sekata, tudi če ju poljubno podaljšamo na obeh straneh.'
+        p.display_text(self, Definicija_XXIII, prop)
+        
+        Book_I_Definitions.Definition_XXIII(self)
+        self.wait()
+        
+        self.clear()
+        
+        
+        
     def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
         """
         "First Definition: A point is that which has not parts"
@@ -686,3 +699,30 @@ class Book_I_Definitions(Scene):
         scene.remove(square, rectangle, rhombus)
         scene.wait(10)
         
+    
+    def Definition_XXIII(scene : Scene):
+        """
+        Euclid: Parallel lines are straight-lines which, being in the same plane, 
+        and being produced to infinity in each direction, meet with one another in neither (of these directions).
+        """
+        
+        lines = []
+        
+        start = LEFT
+        end = RIGHT
+        
+        for i in range(5):
+            line_1 = Line(start=start, end=end, color=YELLOW)
+            line_1_ex = Line(start=2*start, end=2*end, color=YELLOW)
+            line_2 = Line(start=start + DOWN, end=end + DOWN, color=YELLOW)
+            line_2_ex = Line(start=2*start + DOWN, end=2*end + DOWN, color=YELLOW)
+            start += (1/2) * LEFT
+            end += (1/2) * RIGHT
+            lines.append((line_1, line_1_ex, line_2, line_2_ex))
+            
+        
+        (line_1, line_2, third_line, fourth_line) = lines[0]
+        scene.add(line_1, line_2)
+        for (_line_1, line_1_ex, _line_2, line_2_ex) in lines:
+            scene.play(Transform(line_1, line_1_ex))
+            scene.play(Transform(line_2, line_2_ex))
