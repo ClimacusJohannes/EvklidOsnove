@@ -32,16 +32,17 @@ class Proposition():
     def do_lines_have_common_points(line_1, line_2):
         point_in_common = 0
         which_point = ""
-        if (all(line_1.start) == all(line_2.start)):
+        point = Dot(ORIGIN)
+        if point.consider_points_equals_2d(p0=line_1.start, p1=line_2.start):
             point_in_common = line_1.start
             which_point = "start-start"
-        elif (all(line_1.start) == all(line_2.end)):
+        elif point.consider_points_equals_2d(line_1.start, line_2.end):
             point_in_common = line_1.start
             which_point = "start-end"
-        elif (all(line_1.end) == all(line_2.start)):
+        elif point.consider_points_equals_2d(line_1.end, line_2.start):
             point_in_common = line_1.end 
             which_point = "end-start"
-        elif (all(line_1.end) == all(line_2.end)):
+        elif point.consider_points_equals_2d(line_1.end, line_2.end):
             point_in_common = line_1.end
             which_point = "end-end"
 
@@ -131,3 +132,36 @@ class Proposition():
                 return True
         except:
             ValueError("Need subscriptable objects, insted got: " + str(pnt1) + str(pnt2))
+
+    def are_angles_congruent(angle1 : Angle, angle2 : Angle):
+        lines1 = angle1.get_lines()
+        lines2 = angle2.get_lines()
+        result = 0
+        
+        for line1 in lines1:
+            for line2 in lines2:
+                if line1.get_slope() == line2.get_slope():
+                    result += 1
+                elif line1.get_slope() != line2.get_slope() * (-1):
+                    result += 1
+        
+        print("The result is %d" % result) 
+        return result >= 2
+    
+    def rotate_to_cover_other_angle(angle1 : Angle, angle2 : Angle):
+        
+        rotate_for = 0.
+        
+        angle1_copy = angle1.copy()
+        angle2_copy = angle2.copy()
+        
+        lines1 = angle1_copy.get_lines()
+        lines2 = angle2_copy.get_lines()
+        
+        rotate_for = (lines1[0].get_slope() - lines2[1].get_slope()) % (2 * PI)
+        # angle1_copy.rotate(angle=rotate_for)
+        
+        # if not Proposition.are_angles_congruent(angle1_copy, angle2_copy):
+        #     rotate_for = lines1[0].get_slope() - lines2[0].get_slope()
+        
+        return rotate_for

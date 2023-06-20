@@ -1,4 +1,4 @@
-from Triangles import EuclidTriangle, RightTriangle
+from Triangles import EuclidTriangle, RightAngledTriangle
 from manim import *
 import pytest
 
@@ -33,20 +33,20 @@ def test_right_triangle_gamma():
     assert triangle.angles["gamma"] == angle
 
 def test_right_triangle():
-    triangle = RightTriangle(LEFT, RIGHT, RIGHT+UP)
+    triangle = RightAngledTriangle(LEFT, RIGHT, RIGHT+UP)
     right_angle = (PI/2) / DEGREES
     assert triangle.angles["gamma"] == right_angle
 
 # # @pytest.mark.fake
 # def test_fake_right_triangle():
-#     triangle = RightTriangle(2*LEFT, 2*RIGHT, 1/2*UP)
+#     triangle = RightAngledTriangle(2*LEFT, 2*RIGHT, 1/2*UP)
 #     right_angle = (PI/2) / DEGREES
 #     assert triangle.angles["gamma"] == right_angle
 
 # assert exc_info.message == "This is not a right triangle"
 def test_fake_right_triangle():
     with pytest.raises(ValueError):
-        triangle = RightTriangle(2*LEFT, 2*RIGHT, RIGHT+UP)
+        triangle = RightAngledTriangle(2*LEFT, 2*RIGHT, RIGHT+UP)
         print(triangle.angles["gamma"])
 
 # assert exc_info.message == "This is not a right triangle"

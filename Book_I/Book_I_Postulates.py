@@ -45,6 +45,33 @@ class Book_I_Propositions(Scene):
         
         # Display the fourth postlate
         
+        Definicija_IV = "Knjiga I, Postulat IV."
+        prop = f'Da so vsi pravi koti med sabo enaki.'
+        
+        p.display_text(self, Definicija_IV, prop)
+        
+        lines1 = (Line(2*RIGHT, RIGHT), Line(RIGHT, RIGHT+UP))
+        lines2 = (Line(2*LEFT, LEFT), Line(LEFT, LEFT+UP))
+        
+        angle1 = Angle(line1=lines1[0], line2=lines1[1], radius=0.5, other_angle=False, quadrant=(-1, 1))
+        angle2 = Angle(line1=lines2[0], line2=lines2[1], radius=0.5, other_angle=True, quadrant=(-1, 1))
+        
+        for line in lines1:
+            angle1.add(line)
+        for line in lines2:
+            angle2.add(line)
+        self.play(Create(angle1))
+        self.play(Create(angle2))
+
+        Book_I_Propositions.Postulate_IV(self, angle1, angle2)
+        self.wait()
+
+        self.clear()
+        
+        # Display the fifth postlate
+        
+        Definicija_V = "Knjiga I, Postulat V."
+        
     def Postulate_I(scene : Scene, point_1, point_2):
         line = Line(point_1, point_2)
         
@@ -97,3 +124,38 @@ class Book_I_Propositions(Scene):
         scene.play(Create(circle))
         
         return circle
+    
+    def Postulate_IV(scene : Scene, angle_1 : Angle, angle_2 : Angle):
+        
+        if angle_1 not in scene.mobjects:
+            scene.play(Create(angle_1))
+        if angle_2 not in scene.mobjects:
+            scene.play(Create(angle_2))
+        
+        if abs(angle_1.get_value()) != PI * (1/2):
+            raise ValueError("angle_1 must be a right angle, but is " + str(angle_1.get_value())+ "\nTry ather_angle=True")
+        elif abs(angle_2.get_value()) != PI * (1/2):
+            raise ValueError("angle_2 must be a right angle, but is " + str(angle_2.get_value()) + "\nTry ather_angle=True")
+        
+        (angle_1_center, _nn) = p.do_lines_have_common_points(line_1=angle_1.get_lines()[0], line_2=angle_1.get_lines()[1])
+        (angle_2_center, _nn) = p.do_lines_have_common_points(line_1=angle_2.get_lines()[0], line_2=angle_2.get_lines()[1])
+        
+        # center1 = Dot(angle_1_center)
+        # angle_1.add(center1)
+        # center2 = Dot(angle_2_center)
+        # angle_2.add(center2)
+        
+        scene.play(angle_1.animate.shift(-angle_1_center))
+        scene.play(angle_2.animate.shift(-angle_2_center))
+        
+        rotate_for = p.rotate_to_cover_other_angle(angle_1, angle_2)
+        
+        print("Rotating for " + str(rotate_for))
+        scene.play(Rotate(angle_2, angle=rotate_for, about_point=ORIGIN))
+        
+        
+        
+        
+        
+        
+            
