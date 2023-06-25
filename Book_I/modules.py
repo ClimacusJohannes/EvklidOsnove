@@ -134,23 +134,28 @@ class Proposition():
             ValueError("Need subscriptable objects, insted got: " + str(pnt1) + str(pnt2))
 
     def are_angles_congruent(angle1 : Angle, angle2 : Angle):
+        
+        if angle1.get_value() != angle2.get_value():
+            return False
+
         lines1 = angle1.get_lines()
         lines2 = angle2.get_lines()
         result = 0
         
         for line1 in lines1:
             for line2 in lines2:
-                if line1.get_slope() == line2.get_slope():
+                if line1.points.all() == line2.points.all():
                     result += 1
-                elif line1.get_slope() != line2.get_slope() * (-1):
-                    result += 1
+                    
+        
+            
         
         print("The result is %d" % result) 
-        return result >= 2
+        return result == 4
     
     def rotate_to_cover_other_angle(angle1 : Angle, angle2 : Angle):
         
-        rotate_for = 0.
+        # rotate_for = 0.
         
         angle1_copy = angle1.copy()
         angle2_copy = angle2.copy()
@@ -158,10 +163,13 @@ class Proposition():
         lines1 = angle1_copy.get_lines()
         lines2 = angle2_copy.get_lines()
         
-        rotate_for = (lines1[0].get_slope() - lines2[1].get_slope()) % (2 * PI)
-        # angle1_copy.rotate(angle=rotate_for)
+        rotate_for = lines1[0].get_angle() - lines2[1].get_angle()
+        angle1_copy.rotate(angle=rotate_for)
         
-        # if not Proposition.are_angles_congruent(angle1_copy, angle2_copy):
-        #     rotate_for = lines1[0].get_slope() - lines2[0].get_slope()
+        while not Proposition.are_angles_congruent(angle1_copy, angle2_copy):
+            print("Wrong direction!")
+            angle1_copy.rotate(angle=-rotate_for)
+            rotate_for =  lines2[1].get_angle() - lines1[0].get_angle()
+            angle1_copy.rotate(angle=rotate_for)
         
         return rotate_for
