@@ -60,6 +60,7 @@ class Book_I_Propositions(Scene):
             angle1.add(line)
         for line in lines2:
             angle2.add(line)
+        angle2.set_color(RED)
         self.play(Create(angle1))
         self.play(Create(angle2))
 
@@ -71,6 +72,13 @@ class Book_I_Propositions(Scene):
         # Display the fifth postlate
         
         Definicija_V = "Knjiga I, Postulat V."
+        prop = f'Da, če ena daljica (premica, ravna črta) v preseku z drugima dvema tvori na isti strani dva notranja kota,\nvsota katerih je manjša od dveh pravih kotov,\ntedaj se ti daljici (premici, ravnia ćrti), neomejeno (neskončno) podaljšani, sekata,\nin to na tisti strani, na kateri je vsota kotov manjša od dveh pravih.'
+        
+        line1 = Line(3*LEFT+2*UP, RIGHT+UP)
+        line2 = Line(2*LEFT+3*DOWN, 2*RIGHT+UP)
+        line3 = Line(2*LEFT+4*DOWN, LEFT+3*UP)
+        
+        Book_I_Propositions.Postulate_V(self, line1, line2, line3)
         
     def Postulate_I(scene : Scene, point_1, point_2):
         line = Line(point_1, point_2)
@@ -154,8 +162,30 @@ class Book_I_Propositions(Scene):
         scene.play(Rotate(angle_2, angle=rotate_for, about_point=ORIGIN))
         
         
+    def Postulate_V(scene : Scene, line1 : Line, line2 : Line, line3 : Line):
+        """
+        And that if a straight-line falling across two (other) straight-lines 
+        makes internal angles on the same side (of itself) less than two right-angles, 
+        being produced to infinity, the two (other) straight-lines meet on that side (of the original straight-line) 
+        that the (internal an- gles) are less than two right-angles (and do not meet on the other side).
+        """
         
-        
-        
-        
+        if line1 not in scene.mobjects:
+            scene.play(Create(line1))
             
+        if line2 not in scene.mobjects:
+            scene.play(Create(line2))
+            
+        if line3 not in scene.mobjects:
+            scene.play(Create(line3))
+            
+        (angle1, value1) = Book_I_Definitions.Definition_IX(scene, line1, line3, create=False)
+        if abs(value1) >= PI * (1/2):
+            (angle1, value1)  = Book_I_Definitions.Definition_IX(scene, line1, line3, other_angle=True, create=False)
+        
+        (angle2, value2) = Book_I_Definitions.Definition_IX(scene, line2, line3, create=False)
+        if abs(value2) >= PI * (1/2):
+            (angle2, value2) = Book_I_Definitions.Definition_IX(scene, line2, line3, other_angle=True, create=False)
+        
+        scene.play(Create(angle1))
+        scene.play(Create(angle2))

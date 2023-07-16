@@ -135,7 +135,8 @@ class Proposition():
 
     def are_angles_congruent(angle1 : Angle, angle2 : Angle):
         
-        if angle1.get_value() != angle2.get_value():
+        if abs(angle1.get_value()) != abs(angle2.get_value()):
+            print("Angles have different values: " + str(angle1.get_value()) + " " + str(angle2.get_value()))
             return False
 
         lines1 = angle1.get_lines()
@@ -145,6 +146,9 @@ class Proposition():
         for line1 in lines1:
             for line2 in lines2:
                 if line1.points.all() == line2.points.all():
+                    for point in line1.points:
+                        for point2 in line2.points:
+                            print (point, point2)
                     result += 1
                     
         
@@ -163,7 +167,7 @@ class Proposition():
         lines1 = angle1_copy.get_lines()
         lines2 = angle2_copy.get_lines()
         
-        rotate_for = lines1[0].get_angle() - lines2[1].get_angle()
+        rotate_for = -(lines1[0].get_angle() - lines2[1].get_angle())
         angle1_copy.rotate(angle=rotate_for)
         
         while not Proposition.are_angles_congruent(angle1_copy, angle2_copy):

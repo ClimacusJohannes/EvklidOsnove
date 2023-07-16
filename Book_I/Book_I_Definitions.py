@@ -426,7 +426,7 @@ class Book_I_Definitions(Scene):
 
         return lines
     
-    def Definition_IX(scene : Scene, line_1 : Line, line_2 : Line, color : Color = YELLOW, other_angle : bool = False, angle_radius : int | float = 4, quadrant=(1,1)):
+    def Definition_IX(scene : Scene, line_1 : Line, line_2 : Line, color : Color = YELLOW, other_angle : bool = False, angle_radius : int | float = 4, quadrant=(1,1), create = True):
         """
         Ninth definition:
         And when the lines containing the angle are straight then the angle is called rectilinear.
@@ -471,10 +471,12 @@ class Book_I_Definitions(Scene):
         line_1.z_index += 1
         line_2.z_index += 1
         mfill.z_index = 0
-        scene.add(line_1, line_2)
-        scene.play(Create(mfill))
+        if create:
+            scene.add(line_1, line_2)
+            scene.play(Create(mfill))
             
-        return mfill
+        value = angle.get_value()    
+        return (mfill, value)
 
     def Definition_X(scene: Scene, line_1 : Line, line_2 : Line, line_3 : Line = None):
         """
