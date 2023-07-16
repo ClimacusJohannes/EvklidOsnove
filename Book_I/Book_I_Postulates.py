@@ -3,7 +3,7 @@ from manim.utils.color import Color
 from modules import Proposition as p
 from Book_I_Definitions import Book_I_Definitions
 
-class Book_I_Propositions(Scene):
+class Book_I_Postulates(Scene):
     
     def construct(self):
         
@@ -14,7 +14,7 @@ class Book_I_Propositions(Scene):
         
         p.display_text(self, Definicija_I, prop)
 
-        line = Book_I_Propositions.Postulate_I(scene=self, point_1 = 2*LEFT+DOWN, point_2 = 2*RIGHT+UP)
+        line = Book_I_Postulates.Postulate_I(scene=self, point_1 = 2*LEFT+DOWN, point_2 = 2*RIGHT+UP)
         self.wait()
 
         self.clear()
@@ -26,7 +26,7 @@ class Book_I_Propositions(Scene):
         
         p.display_text(self, Definicija_II, prop)
 
-        extended_line = Book_I_Propositions.Postulate_II(self, line, to_exend = "end", extension_length = 3)
+        extended_line = Book_I_Postulates.Postulate_II(self, line, to_exend = "end", extension_length = 3)
         self.wait()
 
         self.clear()
@@ -38,7 +38,7 @@ class Book_I_Propositions(Scene):
         
         p.display_text(self, Definicija_III, prop)
 
-        circle = Book_I_Propositions.Postulate_III(self, center=DOWN, radius=2.)
+        circle = Book_I_Postulates.Postulate_III(self, center=DOWN, radius=2.)
         self.wait()
 
         self.clear()
@@ -64,7 +64,7 @@ class Book_I_Propositions(Scene):
         self.play(Create(angle1))
         self.play(Create(angle2))
 
-        Book_I_Propositions.Postulate_IV(self, angle1, angle2)
+        Book_I_Postulates.Postulate_IV(self, angle1, angle2)
         self.wait()
 
         self.clear()
@@ -78,12 +78,12 @@ class Book_I_Propositions(Scene):
         line2 = Line(2*LEFT+3*DOWN, 2*RIGHT+UP)
         line3 = Line(2*LEFT+4*DOWN, LEFT+3*UP)
         
-        Book_I_Propositions.Postulate_V(self, line1, line2, line3)
+        Book_I_Postulates.Postulate_V(self, line1, line2, line3)
         
-    def Postulate_I(scene : Scene, point_1, point_2):
-        line = Line(point_1, point_2)
+    def Postulate_I(scene : Scene, point_1, point_2, line_color=WHITE, point_1_color=WHITE, point_2_color=WHITE):
+        line = Line(point_1, point_2, color=line_color)
         
-        scene.add(Dot(point_1), Dot(point_2))
+        scene.add(Dot(point_1, color=point_1_color), Dot(point_2, color=point_2_color))
         scene.play(Create(line))
         return line
         
@@ -125,7 +125,7 @@ class Book_I_Propositions(Scene):
 
     def Postulate_III(scene : Scene, center : Point, radius : float = 1., color : Color = RED):
         
-        scene.add(Dot(center))
+        scene.play(Create(Dot(center, color=color)))
         
         circle = Circle(arc_center=center, radius=radius, color=color)
         
