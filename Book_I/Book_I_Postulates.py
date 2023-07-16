@@ -167,7 +167,7 @@ class Book_I_Propositions(Scene):
         And that if a straight-line falling across two (other) straight-lines 
         makes internal angles on the same side (of itself) less than two right-angles, 
         being produced to infinity, the two (other) straight-lines meet on that side (of the original straight-line) 
-        that the (internal an- gles) are less than two right-angles (and do not meet on the other side).
+        that the (internal angles) are less than two right-angles (and do not meet on the other side).
         """
         
         if line1 not in scene.mobjects:
@@ -181,7 +181,7 @@ class Book_I_Propositions(Scene):
             
         (angle1, value1) = Book_I_Definitions.Definition_IX(scene, line1, line3, create=False)
         if abs(value1) >= PI * (1/2):
-            (angle1, value1)  = Book_I_Definitions.Definition_IX(scene, line1, line3, other_angle=True, create=False)
+            (angle1, value1)  = Book_I_Definitions.Definition_IX(scene, line1, line3, other_angle=True, create=False, quadrant=(1,-1))
         
         (angle2, value2) = Book_I_Definitions.Definition_IX(scene, line2, line3, create=False)
         if abs(value2) >= PI * (1/2):
@@ -189,3 +189,7 @@ class Book_I_Propositions(Scene):
         
         scene.play(Create(angle1))
         scene.play(Create(angle2))
+        
+        # scene.play(Transform(angle1.shift(-angle1.get_start())))
+        # scene.play(Transform(angle2.shift(-angle2.get_start())))
+    
