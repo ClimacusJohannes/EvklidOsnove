@@ -101,16 +101,16 @@ class Proposition_I_alt(Scene):
         daljica_length = np.linalg.norm(daljica.end - daljica.start)
         daljica_slope = (daljica.end - daljica.start) / np.linalg.norm(daljica.end - daljica.start)
         
-        step_count = 0
-        Proposition.display_step(scene, f'Izriši <span font-size="300%" font-weight="700" fgcolor="{RED}">○</span> s središčem <span fgcolor="{RED}">●</span>\nin polmerom <span font-weight="700" fgcolor="{BLUE}">⎯</span>\n - Tretji postulat.', step_count)
+        down_shift = 0
+        step = Proposition.display_step(scene, f'1) Izriši <span fgcolor="{RED}">⨀</span> s središčem <span fgcolor="{RED}">●</span>\nin polmerom <span font-weight="700" fgcolor="{BLUE}">⎯</span>\n - Tretji postulat.', down_shift)
         krog1 = Book_I_Postulates.Postulate_III(scene, daljica.start, daljica_length, color=RED)
-        step_count += 2
         
-        Proposition.display_step(scene, f'Prav tako izriši<span font-size="300%" font-weight="700" fgcolor="{GREEN}">○</span>s središčem <span fgcolor="{GREEN}">●</span>\nin polmerom <span font-weight="700" fgcolor="{BLUE}">⎯</span>\n - Tretji postulat.\n', step_count)
+        down_shift += (step.height * DOWN)
+        step = Proposition.display_step(scene, f'2) Izriši <span fgcolor="{GREEN}">⨀</span> s središčem <span fgcolor="{GREEN}">●</span>\nin polmerom <span fgcolor="{BLUE}">⎯</span>\n - Tretji postulat.\n', down_shift, prev_step=step)
         krog2 = Book_I_Postulates.Postulate_III(scene, daljica.end, daljica_length, color=GREEN)
-        step_count += 2
         
-        Proposition.display_step(scene, f'Nato iz točke ●,\nv kateri se izrisana kroga sekata,\nizriši dve ravni daljici ⎯ in ⎯,\nki se končata v točkah <span fgcolor="{RED}">●</span> and <span fgcolor="{GREEN}">●</span>\n - Prvi Postulat', step_count)
+        down_shift += (step.height * DOWN)
+        step = Proposition.display_step(scene, f'3) Iz točke ●,\nv kateri se izrisana kroga sekata,\nizriši dve ravni daljici ⎯ in  ⎯,\nki se končata v točkah <span fgcolor="{RED}">●</span> and <span fgcolor="{GREEN}">●</span>\n - Prvi Postulat', down_shift, prev_step=step)
         tocka_intersekcije = ( daljica.start + ( (daljica_length / 2) * (daljica_slope))) + ((matmul(daljica_slope, array([[0,-1,0],[1,0,0],[0,0,0]])) * (daljica_length * sqrt(3) / 2)) * orientation)
         krak1 = Book_I_Postulates.Postulate_I(scene, point_1=tocka_intersekcije, point_2=daljica.start, point_2_color=RED)
         krak1.set_color(color)

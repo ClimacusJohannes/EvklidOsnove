@@ -19,16 +19,20 @@ class Proposition():
         # scene.remove(prop)
         scene.wait()
 
-    def display_step(scene, text, step_count):
-        
-        if (type(text) != Text) and type(text) == str:
-            text = MarkupText(text, font_size=DEFAULT_FONT_SIZE/(2)).to_edge(UR).shift(step_count*DOWN)
+    def display_step(scene, text, down_shift = 0, prev_step : MarkupText = None):
+        if prev_step:
+            scene.play(prev_step.animate.set_opacity(0.25))
+        if (type(text) == Text) or type(text) == str:
+            text = MarkupText(text, font_size=DEFAULT_FONT_SIZE/(1.70), justify=True, line_spacing=1.5).shift(3*UP+2*RIGHT)
+            text.shift(RIGHT * text.width / 2.)
+            text.shift(down_shift)
         else:
-            TypeError('The title is supposed to be either a Text or a str.')
-        run_time = len(text) / 15
+            TypeError('The text is supposed to be either a Text or a str.')
+        run_time = len(text) / 20
         scene.play(Write(text, run_time=run_time))
         scene.wait()
-        step_count += 1
+        
+        return text
 
     def rotate(circle : Circle):
         previous = circle.get_anchors_and_handles()

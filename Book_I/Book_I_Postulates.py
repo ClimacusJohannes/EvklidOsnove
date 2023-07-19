@@ -83,7 +83,7 @@ class Book_I_Postulates(Scene):
     def Postulate_I(scene : Scene, point_1, point_2, line_color=WHITE, point_1_color=WHITE, point_2_color=WHITE):
         line = Line(point_1, point_2, color=line_color)
         
-        scene.add(Dot(point_1, color=point_1_color), Dot(point_2, color=point_2_color))
+        scene.add(Dot(point_1, color=point_1_color, z_index=100), Dot(point_2, color=point_2_color, z_index=100))
         scene.play(Create(line))
         return line
         
