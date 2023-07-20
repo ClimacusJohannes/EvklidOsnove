@@ -25,7 +25,9 @@ class Proposition():
         if (type(text) == Text) or type(text) == str:
             text = MarkupText(text, font_size=DEFAULT_FONT_SIZE/(1.70), justify=True, line_spacing=1.5).shift(3*UP+2*RIGHT)
             text.shift(RIGHT * text.width / 2.)
-            text.shift(down_shift)
+            
+            # determine how much the step text should he shifted
+            text.shift(down_shift + (text.height / 2) * DOWN)
         else:
             TypeError('The text is supposed to be either a Text or a str.')
         run_time = len(text) / 20
