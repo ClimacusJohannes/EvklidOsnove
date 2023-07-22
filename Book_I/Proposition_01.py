@@ -101,16 +101,25 @@ class Proposition_I_alt(Scene):
         daljica_length = np.linalg.norm(daljica.end - daljica.start)
         daljica_slope = (daljica.end - daljica.start) / np.linalg.norm(daljica.end - daljica.start)
         
+        steps = Mobject()
+        
         down_shift = 0
+        step = Proposition.display_step(scene, "KONSTRUKCIJA")
+        steps.add(step)
+        down_shift += (((step.height + 0.2))  * DOWN)
+        
         step = Proposition.display_step(scene, f'1) Izriši <span fgcolor="{RED}">⨀</span> s središčem <span fgcolor="{RED}">●</span>\nin polmerom <span font-weight="700" fgcolor="{BLUE}">⎯</span>\n - Tretji postulat.', down_shift)
+        steps.add(step)
         krog1 = Book_I_Postulates.Postulate_III(scene, daljica.start, daljica_length, color=RED)
         down_shift += (((step.height + 0.2))  * DOWN)
         
         step = Proposition.display_step(scene, f'2) Izriši <span fgcolor="{GREEN}">⨀</span> s središčem <span fgcolor="{GREEN}">●</span>\nin polmerom <span fgcolor="{BLUE}">⎯</span>\n - Tretji postulat.\n', down_shift, prev_step=step)
+        steps.add(step)
         krog2 = Book_I_Postulates.Postulate_III(scene, daljica.end, daljica_length, color=GREEN)
         down_shift += (((step.height + 0.2))  * DOWN)
         
         step = Proposition.display_step(scene, f'3) Iz točke ●,\nv kateri se izrisana kroga sekata,\nizriši dve ravni daljici ⎯ in  ⎯,\nki se končata v točkah <span fgcolor="{RED}">●</span> and <span fgcolor="{GREEN}">●</span>\n - Prvi Postulat', down_shift, prev_step=step)
+        steps.add(step)
         tocka_intersekcije = ( daljica.start + ( (daljica_length / 2) * (daljica_slope))) + ((matmul(daljica_slope, array([[0,-1,0],[1,0,0],[0,0,0]])) * (daljica_length * sqrt(3) / 2)) * orientation)
         krak1 = Book_I_Postulates.Postulate_I(scene, point_1=tocka_intersekcije, point_2=daljica.start, point_2_color=RED)
         krak1.set_color(color)
@@ -118,8 +127,11 @@ class Proposition_I_alt(Scene):
         krak2.set_color(color)
         down_shift += ((step.height + 0.2)  * DOWN)
 
+        for o in steps.submobjects:
+            scene.play(Uncreate(o, run_time=run_time))  
+            
 
-        if initial_construction == False :
+        if not initial_construction:
             scene.play(Uncreate(krog1, run_time=run_time, lag_ratio=lag_ratio))
             scene.play(Uncreate(krog2, run_time=run_time, lag_ratio=lag_ratio))
             scene.wait()
