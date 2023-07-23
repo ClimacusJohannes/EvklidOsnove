@@ -103,6 +103,8 @@ class Proposition_I_alt(Scene):
         
         steps = Mobject()
         
+        # KONSTRUKCIJA
+                
         down_shift = 0
         step = Proposition.display_step(scene, "KONSTRUKCIJA")
         steps.add(step)
@@ -130,6 +132,14 @@ class Proposition_I_alt(Scene):
         for o in steps.submobjects:
             scene.play(Uncreate(o, run_time=run_time))  
             
+
+        # DOKAZ
+        
+        down_shift = 0
+        step = Proposition.display_step(scene, "DOKAZ")
+        steps.add(step)
+        down_shift += (((step.height + 0.2))  * DOWN)
+
 
         if not initial_construction:
             scene.play(Uncreate(krog1, run_time=run_time, lag_ratio=lag_ratio))
