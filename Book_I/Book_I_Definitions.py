@@ -1,9 +1,7 @@
 from manim import *
-from manim.utils.color import Color
-
 
 from modules import Proposition as p
-import Triangles 
+import Triangles
 import FourSidedFigures
 
 class Book_I_Definitions(Scene):
@@ -14,7 +12,7 @@ class Book_I_Definitions(Scene):
 
         Definicija_I = "Knjiga I, Definicija I."
         prop = f'<span fgcolor="{YELLOW}">Točka</span> je tisto, kar nima delov/ni deljivo.'
-        
+
         p.display_text(self, Definicija_I, prop)
 
         point = Book_I_Definitions.Definition_I(self, color=YELLOW)
@@ -277,7 +275,7 @@ class Book_I_Definitions(Scene):
         
         
         
-    def Definition_I(scene : Scene, point : Point = ORIGIN, color : Color = WHITE):
+    def Definition_I(scene : Scene, point : Point = ORIGIN, color = WHITE):
         """
         "First Definition: A point is that which has not parts"
         Takes in a scene : Scene, a point : Point and color : Color
@@ -288,7 +286,7 @@ class Book_I_Definitions(Scene):
 
         return dot
 
-    def Definition_II(scene : Scene, start : Point = 2 * LEFT, end : Point = 2 * RIGHT, color : Color = WHITE):
+    def Definition_II(scene : Scene, start : Point = 2 * LEFT, end : Point = 2 * RIGHT, color = WHITE):
         """
         Second Definition: A line is length without breath.
         Takes in scene : Scene, start and end of line : Point, and color : Color
@@ -320,7 +318,7 @@ class Book_I_Definitions(Scene):
 
         return line
     
-    def Definition_IV(scene : Scene, point1 : Point, point2 : Point, color : Color = WHITE, dot_color = None):
+    def Definition_IV(scene : Scene, point1 : Point, point2 : Point, color = WHITE, dot_color = None):
         """
         "Fourth Definition: A straight line is that which lies evenly between its extremities."
         Takes in (a) scene : Scene, (b) point1 and (c) point2 : Point, color : Color 
@@ -426,7 +424,7 @@ class Book_I_Definitions(Scene):
 
         return lines
     
-    def Definition_IX(scene : Scene, line_1 : Line, line_2 : Line, color : Color = YELLOW, other_angle : bool = False, angle_radius : int | float = 4, quadrant=(1,1), create = True):
+    def Definition_IX(scene : Scene, line_1 : Line, line_2 : Line, color = YELLOW, other_angle : bool = False, angle_radius : int | float = 4, quadrant=(1,1), create = True):
         """
         Ninth definition:
         And when the lines containing the angle are straight then the angle is called rectilinear.
@@ -526,7 +524,7 @@ class Book_I_Definitions(Scene):
         # scene.play(Create(angle1))
         # scene.play(Create(angle2))
 
-    def Definition_XI(scene : Scene, line_1 : Line, line_2 : Line, color : Color =RED):
+    def Definition_XI(scene : Scene, line_1 : Line, line_2 : Line, color =RED):
         """
         Byrne: An obtuse angle is an angle greater than a right angle.
         Euclid: An obtuse angle is greater than a right-angle.
@@ -548,7 +546,7 @@ class Book_I_Definitions(Scene):
 
         return angle
     
-    def Definition_XII(scene : Scene, line_1 : Line, line_2 : Line, color : Color =RED):
+    def Definition_XII(scene : Scene, line_1 : Line, line_2 : Line, color =RED):
         """
         Byrne: An acute angle is an angle less than a right angle.
         Euclid: An acute angle is less than a right-angle.
@@ -609,7 +607,7 @@ class Book_I_Definitions(Scene):
 
         return dot
     
-    def Definition_XVII(scene : Scene, circle : Circle, color : Color=YELLOW):
+    def Definition_XVII(scene : Scene, circle : Circle, color =YELLOW):
         """
         Byrne: A diameter of a circle is a straight line drawn through the centre,
         terminated both ways in the circumference.

@@ -1,41 +1,40 @@
 from manim import *
-from manim.utils.color import Color   
 from modules import Proposition as p
 from Book_I_Definitions import Book_I_Definitions
 
 class Book_I_Postulates(Scene):
-    
-    def construct(self):
-        
+
+    def construct(self): 
+
         # Display first definition
 
         Definicija_I = "Knjiga I, Postulat I."
         prop = f'Da se od vsake točke do vsake druge lahko potegne daljica (premica, ravna črta).'
-        
+
         p.display_text(self, Definicija_I, prop)
 
         line = Book_I_Postulates.Postulate_I(scene=self, point_1 = 2*LEFT+DOWN, point_2 = 2*RIGHT+UP)
         self.wait()
 
         self.clear()
-        
+
         # Display first definition
 
         Definicija_II = "Knjiga I, Postulat II."
         prop = f'Da se omejena daljica (premica, ravna črta)\nlahko neprekinjeno (povezano) podaljša\nv svoji premici (daljici, ravni črti).'
-        
+
         p.display_text(self, Definicija_II, prop)
 
         extended_line = Book_I_Postulates.Postulate_II(self, line, to_exend = "end", extension_length = 3)
         self.wait()
 
         self.clear()
-        
+
         # Display the third postlate
-        
+
         Definicija_III = "Knjiga I, Postulat III."
         prop = f'Da se z vsakim središčem in z vsako razdaljo lahko opiše krog.'
-        
+
         p.display_text(self, Definicija_III, prop)
 
         circle = Book_I_Postulates.Postulate_III(self, center=DOWN, radius=2.)
@@ -123,7 +122,7 @@ class Book_I_Postulates(Scene):
         
         return extended_line
 
-    def Postulate_III(scene : Scene, center : Point, radius : float = 1., color : Color = RED):
+    def Postulate_III(scene : Scene, center : Point, radius : float = 1., color = RED):
         
         scene.play(Create(Dot(center, color=color)))
         

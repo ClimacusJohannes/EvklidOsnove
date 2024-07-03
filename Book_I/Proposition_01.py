@@ -8,7 +8,7 @@ from Book_I_Postulates import Book_I_Postulates
 
 class Proposition_I(Scene):
     def construct(self):
-        
+
         # define all the variables
 
         title = "Knjiga I, Izrek I"
@@ -40,14 +40,14 @@ class Proposition_I(Scene):
         daljica_slope = (daljica.end - daljica.start) / np.linalg.norm(daljica.end - daljica.start)
 
         tocka_intersekcije = ( daljica.start + ( (daljica_length / 2) * (daljica_slope))) + ((matmul(daljica_slope, array([[0,-1,0],[1,0,0],[0,0,0]])) * (daljica_length * sqrt(3) / 2)) * orientation)
-        
+
         krog1 = Circle.from_three_points(daljica.start - (daljica_length * daljica_slope), daljica.end, tocka_intersekcije).set_color(RED)
         scene.play(Create(krog1, run_time=run_time, lag_ratio=lag_ratio))
         if initial_construction:
             scene.wait()
 
         krog2 = Circle.from_three_points(daljica.start, daljica.end + (daljica_length * daljica_slope), tocka_intersekcije).set_color(BLUE)
-        
+
         Proposition.rotate(krog2)
 
         scene.play(Create(krog2, run_time=run_time, lag_ratio=lag_ratio))
@@ -70,7 +70,7 @@ class Proposition_I(Scene):
 
 class Proposition_I_alt(Scene):
     def construct(self):
-        
+
         # define all the variables
 
         title = "Knjiga I, Izrek I"
@@ -85,9 +85,7 @@ class Proposition_I_alt(Scene):
         Proposition_I_alt.construction(self, daljica, initial_construction=True, opposite_orientation = True)
 
     def construction(scene : Scene, daljica : Line, color : str = WHITE, initial_construction : bool = False, opposite_orientation : bool=False):
-        
-        
-        
+
         run_time=1.0
         lag_ratio=0.0
         if not initial_construction:

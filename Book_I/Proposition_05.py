@@ -2,7 +2,6 @@ from manim import *
 from numpy import matmul, ndarray, array, sqrt
 import numpy as np
 import math
-from manim.utils.color import Color
 
 from modules import Proposition as p
 from Triangles import ScaleneTriangle

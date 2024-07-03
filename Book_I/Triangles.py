@@ -3,7 +3,6 @@ from manim import WHITE
 from numpy import matmul, array, sqrt
 from modules import Proposition as p 
 import Book_I_Definitions
-from manim.utils.color import Color
 
 
 class EuclidTriangle(Polygram):
@@ -148,7 +147,7 @@ class EuclidTriangle(Polygram):
 
         scene.play(FadeIn(group))
 
-    def color_angle(self, scene : Scene, angle : str, color : Color = YELLOW):
+    def color_angle(self, scene : Scene, angle : str, color = YELLOW):
         if angle == "alpha":
             a = Angle(self.b, self.c)
             if a.get_value() > PI :
