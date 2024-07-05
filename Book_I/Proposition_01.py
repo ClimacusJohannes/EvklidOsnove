@@ -84,7 +84,39 @@ class Proposition_I_alt(Scene):
 
         self.wait()
 
-        Proposition_I_alt.construction(self, daljica, initial_construction=True, opposite_orientation = True)
+        (krak1, krog1, krak2, krog2) = Proposition_I_alt.construction(self, daljica, initial_construction=True, opposite_orientation = True)
+
+
+        # DOKAZ
+        down_shift = 0
+        step = Proposition.display_step(self, "DOKAZ")
+        down_shift += (((step.height + 0.2)) * DOWN)
+
+        step = Proposition.display_step(
+            self,
+            f'1) <span color="{BLUE}">⎯</span> = <span color="{RED}">⎯</span> \n - 15. Definicija',
+            down_shift=down_shift,
+            prev_step=step)
+        (k, d) = Book_I_Definitions.Definition_XV(self, krog1, line1=daljica, line2=krak1)
+        self.wait(1.3)
+        self.play(Uncreate(d))
+        down_shift += ((step.height + 0.2) * DOWN)
+
+        step = Proposition.display_step(
+            self,
+            f'2) <span color="{BLUE}">⎯</span> = <span color="{GREEN}">⎯</span> \n 15.Definicija',
+            down_shift=down_shift,
+            prev_step=step)
+        (k, d) = Book_I_Definitions.Definition_XV(self, krog2, line1=daljica, line2=krak2, rotation=True)
+        self.wait(1.3)
+        self.play(Uncreate(d))
+        down_shift += ((step.height + 0.2) * DOWN)
+
+        step = Proposition.display_step(self,
+                                        f'3)  <span color="{RED}">⎯</span> =  <span color="{GREEN}">⎯</span>.\n QED.',
+                                        down_shift=down_shift,
+                                        prev_step=step)
+        self.wait(5)
 
     # construction
     def construction(scene : Scene, daljica : Line, color : str = WHITE, initial_construction : bool = False, opposite_orientation : bool=False):
@@ -158,44 +190,11 @@ class Proposition_I_alt(Scene):
                 scene.play(Uncreate(o, run_time=run_time))
 
 
-        # DOKAZ
-        if initial_construction:
-            down_shift = 0
-            step = Proposition.display_step(scene, "DOKAZ")
-            steps.add(step)
-            down_shift += (((step.height + 0.2))  * DOWN)
-
-            step = Proposition.display_step(
-                scene, 
-                f'1) <span color="{BLUE}">⎯</span> = <span color="{RED}">⎯</span> \n - 15. Definicija', 
-                down_shift=down_shift, 
-                prev_step=step)
-            steps.add(step)
-            (k, d) = Book_I_Definitions.Definition_XV(scene, krog1, line1=daljica, line2=krak1)
-            scene.wait(1.3)
-            scene.play(Uncreate(d))
-            down_shift += ((step.height + 0.2) * DOWN)
-
-            step = Proposition.display_step(
-                scene, 
-                f'2) <span color="{BLUE}">⎯</span> = <span color="{GREEN}">⎯</span> \n 15.Definicija', 
-                down_shift=down_shift, 
-                prev_step=step)
-            steps.add(step)
-            (k, d) = Book_I_Definitions.Definition_XV(scene, krog2, line1=daljica, line2=krak2, rotation=True)
-            scene.wait(1.3)
-            scene.play(Uncreate(d))
-            down_shift += ((step.height + 0.2) * DOWN)
-
-            step = Proposition.display_step(scene,
-                                            f'3)  <span color="{RED}">⎯</span> =  <span color="{GREEN}">⎯</span>.\n QED.',
-                                            down_shift=down_shift,
-                                            prev_step=step)
-            scene.wait(5)
- 
         scene.remove()
 
         if not initial_construction:
             scene.play(Uncreate(krog1, run_time=run_time, lag_ratio=lag_ratio))
             scene.play(Uncreate(krog2, run_time=run_time, lag_ratio=lag_ratio))
             scene.wait()
+
+        return (krak1, krog1, krak2, krog2)
