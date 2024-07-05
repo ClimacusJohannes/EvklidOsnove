@@ -23,7 +23,7 @@ class Proposition():
         if prev_step:
             scene.play(prev_step.animate.set_opacity(0.25))
         if (type(text) == Text) or type(text) == str:
-            text = MarkupText(text, font_size=DEFAULT_FONT_SIZE/(1.70), justify=True, line_spacing=1.5).shift(3*UP+2*RIGHT)
+            text = MarkupText(text, font_size=DEFAULT_FONT_SIZE/(1.90), justify=True, line_spacing=1.5).shift(3*UP+2*RIGHT)
             text.shift(RIGHT * text.width / 2.)
             
             # determine how much the step text should he shifted

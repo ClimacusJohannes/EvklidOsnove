@@ -568,8 +568,9 @@ class Book_I_Definitions(Scene):
         angle = Book_I_Definitions.Definition_IX(scene, line_1, line_2, color=color, other_angle=other_angle)
 
         return angle
-    
-    def Definition_XV(scene : Scene, circle : Circle):
+    #'
+
+    def Definition_XV(scene : Scene, circle : Circle, line1 = None, line2 = None, rotation=False):
         """
         Byrne: A circle is a plane figure, bounded by one continued line, called its circumference or periphery; 
         and having a certain point within it, from which all straight lines drawn to its circumference are equal.
@@ -579,6 +580,14 @@ class Book_I_Definitions(Scene):
 
         if not circle in scene.mobjects:
             scene.add(circle)
+
+        if line1 and line2:
+            line_eq_line1 = line1.copy()
+            if rotation:
+                line_eq_line1 = Line(line1.end, line1.start, color=line1.get_color())
+            scene.play(Rotate(line_eq_line1, - ((-1) * PI - (line2.get_angle() - line_eq_line1.get_angle())), about_point=circle.get_arc_center()))
+
+            return (circle, line_eq_line1)
 
         center = circle.get_arc_center()
         point_at_angle = circle.point_at_angle(0)
