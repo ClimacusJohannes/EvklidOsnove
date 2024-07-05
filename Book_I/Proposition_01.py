@@ -69,6 +69,8 @@ class Proposition_I(Scene):
             scene.wait()
 
 class Proposition_I_alt(Scene):
+
+    # top leven function
     def construct(self):
 
         # define all the variables
@@ -84,6 +86,7 @@ class Proposition_I_alt(Scene):
 
         Proposition_I_alt.construction(self, daljica, initial_construction=True, opposite_orientation = True)
 
+    # construction
     def construction(scene : Scene, daljica : Line, color : str = WHITE, initial_construction : bool = False, opposite_orientation : bool=False):
 
         run_time=1.0
@@ -100,67 +103,96 @@ class Proposition_I_alt(Scene):
         daljica_slope = (daljica.end - daljica.start) / np.linalg.norm(daljica.end - daljica.start)
 
         steps = Mobject()
+        down_shift = 0
 
         # KONSTRUKCIJA
+        if initial_construction:
+            down_shift = 0
+            step = Proposition.display_step(scene, "KONSTRUKCIJA")
+            steps.add(step)
+            down_shift += (((step.height + 0.2))  * DOWN)
 
-        down_shift = 0
-        step = Proposition.display_step(scene, "KONSTRUKCIJA")
-        steps.add(step)
-        down_shift += (((step.height + 0.2))  * DOWN)
+        # first construction step text
+        if initial_construction:
+            step = Proposition.display_step(
+                scene, 
+                f'1) Izriši <span fgcolor="{RED}">⨀</span> s središčem <span fgcolor="{RED}">●</span>\nin polmerom <span font-weight="700" fgcolor="{BLUE}">⎯</span>\n - Tretji postulat.', 
+                down_shift)
+            steps.add(step)
+            down_shift += (((step.height + 0.2))  * DOWN)
 
-        step = Proposition.display_step(scene, f'1) Izriši <span fgcolor="{RED}">⨀</span> s središčem <span fgcolor="{RED}">●</span>\nin polmerom <span font-weight="700" fgcolor="{BLUE}">⎯</span>\n - Tretji postulat.', down_shift)
-        steps.add(step)
+        # first step construction
         krog1 = Book_I_Postulates.Postulate_III(scene, daljica.start, daljica_length, color=RED)
-        down_shift += (((step.height + 0.2))  * DOWN)
 
-        step = Proposition.display_step(
+        # second construction step text
+        if initial_construction:
+            step = Proposition.display_step(
                 scene,
                 f'2) Izriši <span fgcolor="{GREEN}">⨀</span> s središčem <span fgcolor="{GREEN}">●</span>\nin polmerom <span fgcolor="{BLUE}">⎯</span>\n - Tretji postulat.\n',
                 down_shift,
                 prev_step=step)
-        steps.add(step)
-        krog2 = Book_I_Postulates.Postulate_III(scene, daljica.end, daljica_length, color=GREEN)
-        down_shift += (((step.height + 0.2))  * DOWN)
+            steps.add(step)
+            down_shift += (((step.height + 0.2))  * DOWN)
 
-        step = Proposition.display_step(scene, f'3) Iz točke ●,v kateri se\nizrisana kroga sekata,\nizriši dve ravni daljici ⎯ in  ⎯,\nki se končata v točkah <span fgcolor="{RED}">●</span> and <span fgcolor="{GREEN}">●</span>\n - Prvi Postulat', down_shift, prev_step=step)
-        steps.add(step)
+        # second step construction
+        krog2 = Book_I_Postulates.Postulate_III(scene, daljica.end, daljica_length, color=GREEN)
+       
+        # Third construction step text
+        if initial_construction:
+            step = Proposition.display_step(scene, 
+                                            f'3) Iz točke ●,v kateri se\nizrisana kroga sekata,\nizriši dve ravni daljici <span color="{RED}">⎯</span> in  <span color="{GREEN}">⎯</span>,\nki se končata v točkah <span fgcolor="{RED}">●</span> and <span fgcolor="{GREEN}">●</span>\n - Prvi Postulat', 
+                                            # '
+                                            down_shift, 
+                                            prev_step=step)
+            steps.add(step)
+       
+            down_shift += ((step.height + 0.2)  * DOWN)
+
+        # Third step construction
         tocka_intersekcije = ( daljica.start + ( (daljica_length / 2) * (daljica_slope))) + ((matmul(daljica_slope, array([[0,-1,0],[1,0,0],[0,0,0]])) * (daljica_length * sqrt(3) / 2)) * orientation)
         krak1 = Book_I_Postulates.Postulate_I(scene, point_1=tocka_intersekcije, point_2=daljica.start, point_2_color=RED, line_color=RED)
         krak2 = Book_I_Postulates.Postulate_I(scene, point_1=tocka_intersekcije, point_2=daljica.end,  point_2_color=GREEN, line_color=GREEN)
-        down_shift += ((step.height + 0.2)  * DOWN)
 
-        # '
-
-        for o in steps.submobjects:
-            scene.play(Uncreate(o, run_time=run_time))
+        if initial_construction:
+            for o in steps.submobjects:
+                scene.play(Uncreate(o, run_time=run_time))
 
 
         # DOKAZ
+        if initial_construction:
+            down_shift = 0
+            step = Proposition.display_step(scene, "DOKAZ")
+            steps.add(step)
+            down_shift += (((step.height + 0.2))  * DOWN)
 
-        down_shift = 0
-        step = Proposition.display_step(scene, "DOKAZ")
-        steps.add(step)
-        down_shift += (((step.height + 0.2))  * DOWN)
+            step = Proposition.display_step(
+                scene, 
+                f'1) <span color="{BLUE}">⎯</span> = <span color="{RED}">⎯</span>, \n - 15. Definicija', 
+                down_shift=down_shift, 
+                prev_step=step)
+            steps.add(step)
+            (k, d) = Book_I_Definitions.Definition_XV(scene, krog1, line1=daljica, line2=krak1)
+            scene.wait(1.3)
+            scene.play(Uncreate(d))
+            down_shift += ((step.height + 0.2) * DOWN)
 
-        step = Proposition.display_step(scene, f'1) <span color="{BLUE}">⎯</span> = <span color="{RED}">⎯</span>, \n - 15. Definicija', down_shift=down_shift, prev_step=step)
-        steps.add(step)
-        (k, d) = Book_I_Definitions.Definition_XV(scene, krog1, line1=daljica, line2=krak1)
-        scene.wait(1.3)
-        scene.play(Uncreate(d))
-        down_shift += ((step.height + 0.2) * DOWN)
+            step = Proposition.display_step(
+                scene, 
+                f'2) <span color="{BLUE}">⎯</span> = <span color="{GREEN}">⎯</span> \n 15.Definicija', 
+                down_shift=down_shift, 
+                prev_step=step)
+            steps.add(step)
+            (k, d) = Book_I_Definitions.Definition_XV(scene, krog2, line1=daljica, line2=krak2, rotation=True)
+            scene.wait(1.3)
+            scene.play(Uncreate(d))
+            down_shift += ((step.height + 0.2) * DOWN)
 
-        step = Proposition.display_step(scene, f'2) <span color="{BLUE}">⎯</span> = <span color="{GREEN}">⎯</span> \n 15.Definicija', down_shift=down_shift, prev_step=step)
-        steps.add(step)
-        (k, d) = Book_I_Definitions.Definition_XV(scene, krog2, line1=daljica, line2=krak2, rotation=True)
-        scene.wait(1.3)
-        scene.play(Uncreate(d))
-        down_shift += ((step.height + 0.2) * DOWN)
-
-        step = Proposition.display_step(scene,
-                                        f'3)  <span color="{RED}">⎯</span> =  <span color="{GREEN}">⎯</span>.\n QED.',
-                                        down_shift=down_shift,
-                                        prev_step=step)
-
+            step = Proposition.display_step(scene,
+                                            f'3)  <span color="{RED}">⎯</span> =  <span color="{GREEN}">⎯</span>.\n QED.',
+                                            down_shift=down_shift,
+                                            prev_step=step)
+            scene.wait(5)
+ 
         scene.remove()
 
         if not initial_construction:
