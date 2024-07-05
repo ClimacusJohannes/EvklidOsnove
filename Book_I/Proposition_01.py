@@ -84,7 +84,7 @@ class Proposition_I_alt(Scene):
 
         self.wait()
 
-        (krak1, krog1, krak2, krog2) = Proposition_I_alt.construction(self, daljica, initial_construction=True, opposite_orientation = True)
+        (tocka_intersekcije, krak1, krog1, krak2, krog2) = Proposition_I_alt.construction(self, daljica, initial_construction=True, opposite_orientation = True)
 
 
         # DOKAZ
@@ -136,6 +136,7 @@ class Proposition_I_alt(Scene):
 
         steps = Mobject()
         down_shift = 0
+        everyting_added_to_scene = Mobject()
 
         # KONSTRUKCIJA
         if initial_construction:
@@ -182,19 +183,11 @@ class Proposition_I_alt(Scene):
 
         # Third step construction
         tocka_intersekcije = ( daljica.start + ( (daljica_length / 2) * (daljica_slope))) + ((matmul(daljica_slope, array([[0,-1,0],[1,0,0],[0,0,0]])) * (daljica_length * sqrt(3) / 2)) * orientation)
-        krak1 = Book_I_Postulates.Postulate_I(scene, point_1=tocka_intersekcije, point_2=daljica.start, point_2_color=RED, line_color=RED)
-        krak2 = Book_I_Postulates.Postulate_I(scene, point_1=tocka_intersekcije, point_2=daljica.end,  point_2_color=GREEN, line_color=GREEN)
-
-        if initial_construction:
-            for o in steps.submobjects:
-                scene.play(Uncreate(o, run_time=run_time))
-
-
-        scene.remove()
+        (krak1, k1p1, k1p2) = Book_I_Postulates.Postulate_I(scene, point_1=tocka_intersekcije, point_2=daljica.start, point_1_color=color, point_2_color=RED, line_color=RED)
+        (krak2, k2p1, k2p2) = Book_I_Postulates.Postulate_I(scene, point_1=tocka_intersekcije, point_2=daljica.end, point_1_color=color,  point_2_color=GREEN, line_color=GREEN)
 
         if not initial_construction:
             scene.play(Uncreate(krog1, run_time=run_time, lag_ratio=lag_ratio))
             scene.play(Uncreate(krog2, run_time=run_time, lag_ratio=lag_ratio))
-            scene.wait()
 
-        return (krak1, krog1, krak2, krog2)
+        return (tocka_intersekcije, krak1, krog1, krak2, krog2)

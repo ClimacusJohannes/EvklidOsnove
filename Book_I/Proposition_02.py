@@ -16,8 +16,8 @@ class Proposition_II(Scene):
         dana_daljica = Line(start=  5 * LEFT + 2 * DOWN, end = 3 * LEFT + DOWN )
         dana_tocka = Dot(2 * LEFT + DOWN)
 
-        self.add(dana_daljica)
-        self.add(dana_tocka)
+        self.play(Create(dana_daljica))
+        self.play(Create(dana_tocka))
 
         Proposition_II.construction(self, dana_daljica, dana_tocka, initial_construction=True)
 
@@ -34,13 +34,13 @@ class Proposition_II(Scene):
 
     def construction(scene : Scene, dana_daljica : Line, dana_tocka : Dot, initial_construction : bool = False):
         initial_index = len(scene.mobjects)
-        
+
         run_time=1.0
         lag_ratio=0.0
         if not initial_construction:
             run_time=0.3
             lag_ratio=0.0
-        
+
         pomozna_daljica = DashedLine(start=dana_daljica.end, end=dana_tocka.get_arc_center())
 
         # Step one
@@ -48,28 +48,27 @@ class Proposition_II(Scene):
         scene.wait()
 
         # Step two
-        (krak1, krog1, krak2, krog2) = Proposition_I_alt.construction(scene, pomozna_daljica, color=ORANGE, opposite_orientation=True)
+        (tocka_intersekcije, krak1, krog1, krak2, krog2) = Proposition_I_alt.construction(scene, pomozna_daljica, color=ORANGE, opposite_orientation=True)
 
         # Step three
-        circle_s = Circle(radius=p.get_line_length(dana_daljica)).shift(dana_daljica.end).set_color(GREEN)
+        circle_s = Circle(radius=p.get_line_length(dana_daljica)).shift(dana_daljica.end).set_color(RED)
         p.rotate(circle_s)
-        sredisce_s = Dot(circle_s.get_arc_center()).set_color(GREEN)
-        polmer_s = Line(start=sredisce_s.get_arc_center(), end=(dana_daljica.end - (p.get_line_length(dana_daljica) * (-1) * p.get_line_slope(krak1)))).set_color(GREEN)
+        sredisce_s = Dot(circle_s.get_arc_center()).set_color(RED)
+        polmer_s = Line(start=sredisce_s.get_arc_center(), end=(dana_daljica.end - (p.get_line_length(dana_daljica) * (-1) * p.get_line_slope(krak1)))).set_color(RED)
         scene.play(Create(sredisce_s, run_time=run_time))
         scene.play(Create(circle_s, run_time=run_time))
 
         podaljsana_daljica = Book_I_Postulates.Postulate_II(scene, krak1, retain = "start", extension_length=p.get_line_length(dana_daljica)).set_color(ORANGE)
-        #podaljsana_daljica = p.create_extended_line(scene, krak1, for_len=p.get_line_length(dana_daljica), fr).set_color(ORANGE)
 
         # podaljsaj enega izmed krakov
-        scene.play(Transform(krak1, podaljsana_daljica, run_time=run_time))
         scene.play(Create(polmer_s, run_time=run_time))
+        scene.play(Transform(krak1, podaljsana_daljica, run_time=run_time))
         if initial_construction:
             scene.wait()
 
 
         circle_l = Circle(radius=p.get_line_length(podaljsana_daljica)).shift(podaljsana_daljica.start).set_color(ORANGE)
-        sredisce_l = Dot(circle_l.get_arc_center()).set_color(ORANGE)
+        sredisce_l = Dot(circle_l.get_arc_center(), z_index=101).set_color(ORANGE)
         scene.play(Create(sredisce_l, run_time=run_time))
         scene.play(Create(circle_l, run_time=run_time))
 
@@ -79,12 +78,10 @@ class Proposition_II(Scene):
         scene.play(Create(koncna_daljica), run_time=run_time)
 
         scene.wait(5)
-
-        if initial_construction == False :
+        if not initial_construction:
             for object in scene.mobjects[initial_index:-1]:
                 try:
                     scene.remove(object)
                 except:
                     pass
             scene.wait()
-        

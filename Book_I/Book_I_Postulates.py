@@ -81,10 +81,12 @@ class Book_I_Postulates(Scene):
         
     def Postulate_I(scene : Scene, point_1, point_2, line_color=WHITE, point_1_color=WHITE, point_2_color=WHITE):
         line = Line(point_1, point_2, color=line_color)
-        
-        scene.add(Dot(point_1, color=point_1_color, z_index=100), Dot(point_2, color=point_2_color, z_index=100))
+       
+        dot1 = Dot(point_1, color=point_1_color, z_index=10)
+        dot2 =  Dot(point_2, color=point_2_color, z_index=10)
+        scene.add(dot1, dot2)
         scene.play(Create(line))
-        return line
+        return (line, dot1, dot2)
         
     def Postulate_II(scene : Scene, line : Line, retain : str = "end", extension_length = 1):
         """
