@@ -25,7 +25,7 @@ class Book_I_Postulates(Scene):
 
         p.display_text(self, Definicija_II, prop)
 
-        extended_line = Book_I_Postulates.Postulate_II(self, line, to_exend = "end", extension_length = 3)
+        extended_line = Book_I_Postulates.Postulate_II(self, line, retain = "end", extension_length = 3)
         self.wait()
 
         self.clear()
@@ -86,8 +86,10 @@ class Book_I_Postulates(Scene):
         scene.play(Create(line))
         return line
         
-    def Postulate_II(scene : Scene, line : Line, to_exend : str = "end", extension_length = 1):
-        
+    def Postulate_II(scene : Scene, line : Line, retain : str = "end", extension_length = 1):
+        """
+        Extends a line  
+        """
         if line not in scene.mobjects:
             scene.play(Create(line))
         
@@ -96,16 +98,17 @@ class Book_I_Postulates(Scene):
         start, end = ORIGIN, ORIGIN
         line_slope = p.get_line_slope(line)
         
-        if to_exend == "start":
+        if retain == "end":
             end = line.end
             
             start = line.start + extension_length * line_slope
             extended_line = Line(start=start, end=end)
+            
             if p.get_line_length(extended_line) < p.get_line_length(line):
                 start = line.start - extension_length * line_slope
                 extended_line = Line(start=start, end=end)
         
-        elif to_exend == "end":
+        elif retain == "start":
             start = line.start
             
             end = line.end + extension_length * line_slope
@@ -115,7 +118,7 @@ class Book_I_Postulates(Scene):
                 extended_line = Line(start=start, end=end)
                 
         else:
-            raise ValueError("to_exend must be 'start' or 'end'")
+            raise ValueError("retain must be 'start' or 'end'")
         
 
         scene.play(Transform(line, extended_line))
