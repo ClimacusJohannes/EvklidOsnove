@@ -76,7 +76,7 @@ class Proposition_I_alt(Scene):
         # define all the variables
 
         title = "Knjiga I, Izrek I"
-        prop = "Na dani daljici\nizriši enakostranični trikotnik."
+        prop = "Na dani daljici izriši enakostranični trikotnik."
 
         Proposition.display_text(self, title, prop)
 
@@ -140,7 +140,7 @@ class Proposition_I_alt(Scene):
         # Third construction step text
         if initial_construction:
             step = Proposition.display_step(scene, 
-                                            f'3) Iz točke ●,v kateri se\nizrisana kroga sekata,\nizriši dve ravni daljici <span color="{RED}">⎯</span> in  <span color="{GREEN}">⎯</span>,\nki se končata v točkah <span fgcolor="{RED}">●</span> and <span fgcolor="{GREEN}">●</span>\n - Prvi Postulat', 
+                                            f'3) Iz točke ●, v kateri se\nizrisana kroga sekata,\nizriši dve ravni daljici <span color="{RED}">⎯</span> in  <span color="{GREEN}">⎯</span>,\nki se končata v točkah <span fgcolor="{RED}">●</span> and <span fgcolor="{GREEN}">●</span>\n - Prvi Postulat', 
                                             # '
                                             down_shift, 
                                             prev_step=step)
@@ -167,7 +167,7 @@ class Proposition_I_alt(Scene):
 
             step = Proposition.display_step(
                 scene, 
-                f'1) <span color="{BLUE}">⎯</span> = <span color="{RED}">⎯</span>, \n - 15. Definicija', 
+                f'1) <span color="{BLUE}">⎯</span> = <span color="{RED}">⎯</span> \n - 15. Definicija', 
                 down_shift=down_shift, 
                 prev_step=step)
             steps.add(step)
